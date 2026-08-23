@@ -6,7 +6,7 @@
 # and transitive dependency to the exact version last verified to work.
 fastf1>=3.5,<4.0
 fastapi>=0.115
-uvicorn[standard]>=0.30
+uvicorn[standard]>=0.52.4
 
 # App Attest authentication for App Store distribution.
 pyattest>=0.1.1
