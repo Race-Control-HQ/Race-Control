@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # backend: Python (pip) dependencies. requirements.txt sets floors/ceilings;
+  # requirements-lock.txt pins the exact resolved set actually installed (see
+  # its header). Review each PR by regenerating requirements-lock.txt against
+  # the updated requirements.txt and committing both together.
+  - package-ecosystem: "pip"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  # GitHub Actions used by the CI workflows themselves.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug overlay: allow plain HTTP to any host so a LAN backend works on a
+     physical device during development. Not present in release builds. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

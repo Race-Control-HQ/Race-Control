@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification icons must be a flat white silhouette on transparent; Android
+     tints them and ignores colour. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFFFFF">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5,3v18h2v-7h4v2h9V6h-6V4H7V3H5zM7,6h4v3H7V6zM11,9h4v3h-4V9zM15,6h3v3h-3V6zM7,12h4v-3H7v3z" />
+</vector>

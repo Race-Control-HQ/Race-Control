@@ -1,0 +1,80 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  test:
+    name: pytest
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: backend/requirements-lock.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # requirements-lock.txt already includes pytest/httpx (test-only
+          # tools, never imported by the running API) so CI installs the
+          # exact same resolved set as the production image.
+          pip install -r requirements-lock.txt
+
+      - name: Lock file covers every direct dependency
+        run: |
+          python - <<'EOF'
+          import re
+          floor = {}
+          with open("requirements.txt") as f:
+              for line in f:
+                  line = line.split("#", 1)[0].strip()
+                  if not line:
+                      continue
+                  name = re.split(r"[<>=\[]", line, maxsplit=1)[0].strip().lower()
+                  floor[name] = line
+          locked = set()
+          with open("requirements-lock.txt") as f:
+              for line in f:
+                  line = line.split("#", 1)[0].strip()
+                  if not line:
+                      continue
+                  locked.add(line.split("==", 1)[0].lower())
+          missing = [name for name in floor if name.split("[")[0] not in locked]
+          if missing:
+              raise SystemExit(
+                  f"requirements-lock.txt is missing direct dependencies from "
+                  f"requirements.txt: {missing}. Regenerate the lock file."
+              )
+          EOF
+
+      # Whole-directory collection, deliberately: naming files here meant the
+      # 19 service test suites never ran in CI. They are all fast, mock-backed
+      # unit tests (no network, no FastF1 download), so there is no reason to
+      # select a subset.
+      - name: Run test suite
+        run: python -m pytest -v
+
+      - name: Import check (no auth configured, mirrors local ./run.sh)
+        run: python -c "import main; print('main.py imports cleanly with no env vars set')"

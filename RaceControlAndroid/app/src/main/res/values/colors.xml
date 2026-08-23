@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Kept in sync with core/design/Color.kt (Theme.swift palette). -->
+    <color name="rc_background">#0A0A0C</color>
+    <color name="rc_racing_red">#E10600</color>
+</resources>

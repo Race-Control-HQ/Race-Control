@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- The API token is device-bound (EncryptedSharedPreferences keys live in
+         the Keystore and do not transfer), so never back it up. -->
+    <exclude domain="sharedpref" path="racecontrol_secure_prefs.xml" />
+</full-backup-content>

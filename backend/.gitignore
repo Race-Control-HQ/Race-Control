@@ -1,0 +1,11 @@
+.venv/
+.fastf1_cache/
+__pycache__/
+*.pyc
+
+# Secrets - never commit real env files or the Play Integrity service
+# account key (.env.example is a template and stays tracked).
+.env
+*.env
+*service-account*.json
+*.key.json

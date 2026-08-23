@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app is dark-only by design (OLED-tuned palette), matching iOS
+         .preferredColorScheme(.dark). Compose owns all real theming; this is
+         only the pre-Compose window background and splash. -->
+    <style name="Theme.RaceControl" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/rc_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.RaceControl.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/rc_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.RaceControl</item>
+    </style>
+</resources>

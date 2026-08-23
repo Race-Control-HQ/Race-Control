@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RaceControl</string>
+
+    <!-- Navigation -->
+    <string name="tab_races">Races</string>
+    <string name="tab_drivers">Drivers</string>
+    <string name="tab_teams">Teams</string>
+    <string name="tab_standings">Standings</string>
+    <string name="tab_circuits">Circuits</string>
+
+    <!-- Common states -->
+    <string name="loading">Loading</string>
+    <string name="loading_drivers">Loading drivers</string>
+    <string name="loading_telemetry">Loading telemetry</string>
+    <string name="error_title">Something went wrong</string>
+    <string name="try_again">Try Again</string>
+    <string name="retry">Retry</string>
+    <string name="slow_first_load">First load for this race can take up to a minute while the server downloads and caches the session.</string>
+    <string name="showing_cached">Showing cached data; you appear to be offline.</string>
+
+    <!-- Errors (wording matched to the iOS APIError descriptions) -->
+    <string name="error_invalid_response">The server returned an unexpected response.</string>
+    <string name="error_unauthorized">The server rejected your API token. Check it in Settings.</string>
+    <string name="error_decoding">Couldn\'t read the data from the server.</string>
+    <string name="error_unreachable">Can\'t reach the RaceControl server. Check it\'s running and the address in Settings.</string>
+    <string name="error_server">Server error (%1$d).</string>
+
+    <!-- Season picker -->
+    <string name="season_picker">Season, currently %1$s</string>
+    <string name="select_season">Select season</string>
+
+    <!-- Races -->
+    <string name="season_title">Season %1$s</string>
+    <string name="up_next">UP NEXT</string>
+    <string name="sprint">SPRINT</string>
+    <string name="round_short">R%1$d</string>
+    <string name="race_completed">Completed</string>
+    <string name="no_races_title">No Races</string>
+    <string name="no_races_message">No schedule found for %1$s.</string>
+
+    <!-- Race detail -->
+    <string name="analysis">ANALYSIS</string>
+    <string name="weekend_schedule">WEEKEND SCHEDULE</string>
+    <string name="no_results_title">No Results</string>
+    <string name="no_results_message">Results aren\'t available for this session yet.</string>
+    <string name="session_race">Race</string>
+    <string name="session_quali">Quali</string>
+    <string name="session_sprint">Sprint</string>
+    <string name="session_sprint_quali">Sprint Q</string>
+    <string name="grid_delta_gained">Gained %1$d places</string>
+    <string name="grid_delta_lost">Lost %1$d places</string>
+    <string name="grid_delta_none">No change from grid</string>
+
+    <!-- Analysis tiles -->
+    <string name="analysis_replay">Replay</string>
+    <string name="analysis_telemetry">Telemetry</string>
+    <string name="analysis_brake_throttle">Brake/Throttle</string>
+    <string name="analysis_lap_times">Lap Times</string>
+    <string name="analysis_strategy">Strategy</string>
+    <string name="analysis_qualifying">Qualifying</string>
+    <string name="analysis_qualifying_ladder">Qualifying Ladder</string>
+    <string name="analysis_track_map">Track Map</string>
+    <string name="analysis_corner_speeds">Corner Speeds</string>
+    <string name="analysis_weather">Weather</string>
+    <string name="analysis_retirements">Retirements</string>
+    <string name="analysis_flags">Flags</string>
+    <string name="analysis_race_trace">Race Trace</string>
+    <string name="analysis_position_chart">Positions</string>
+    <string name="analysis_tyre_performance">Tyre Degradation</string>
+    <string name="analysis_pit_stops">Pit Stops</string>
+    <string name="analysis_pit_swimlane">Pit Swimlane</string>
+    <string name="analysis_qualifying_sectors">Sector Waterfall</string>
+    <string name="analysis_speed_trap">Speed Trap</string>
+    <string name="analysis_minisectors">Mini-Sectors</string>
+    <string name="no_race_trace_title">No Race Trace</string>
+    <string name="no_race_trace_message">Cumulative race timing isn’t available.</string>
+    <string name="no_position_data_title">No Position Data</string>
+    <string name="no_position_data_message">Lap-by-lap positions aren’t available.</string>
+    <string name="no_tyre_data_title">No Tyre Data</string>
+    <string name="no_tyre_data_message">Tyre degradation data isn’t available.</string>
+
+    <!-- Replay -->
+    <string name="lap">LAP</string>
+    <string name="lap_of">/ %1$d</string>
+    <string name="replay_empty_title">No Replay Data</string>
+    <string name="replay_empty_message">Lap timing isn\'t available for this race.</string>
+    <string name="replay_play">Play replay</string>
+    <string name="replay_pause">Pause replay</string>
+    <string name="replay_first_lap">Back to first lap</string>
+    <string name="replay_back_5">Back 5 laps</string>
+    <string name="replay_forward_5">Forward 5 laps</string>
+    <string name="replay_last_lap">Skip to final lap</string>
+    <string name="replay_scrub">Lap position</string>
+    <string name="replay_speed">Playback speed</string>
+    <string name="replay_position_up">Gained a place</string>
+    <string name="replay_position_down">Lost a place</string>
+    <string name="replay_position_same">Position held</string>
+
+    <!-- Drivers -->
+    <string name="search_drivers">Search drivers</string>
+    <string name="head_to_head">Head to Head</string>
+    <string name="no_drivers_title">No Drivers</string>
+    <string name="no_drivers_message">No driver data for %1$s.</string>
+    <string name="no_search_results_title">No Matches</string>
+    <string name="no_search_results_message">No driver matches “%1$s”.</string>
+    <string name="favourite_add">Add favourite</string>
+    <string name="favourite_remove">Remove favourite</string>
+    <string name="favourites">FAVOURITES</string>
+    <string name="stat_points">Points</string>
+    <string name="stat_wins">Wins</string>
+    <string name="stat_position">Position</string>
+    <string name="stat_podiums">Podiums</string>
+    <string name="stat_poles">Poles</string>
+    <string name="points_suffix">%1$s pts</string>
+    <string name="points_breakdown">POINTS BREAKDOWN</string>
+    <string name="points_breakdown_entry">%1$s: %2$s (%3$d%%)</string>
+    <string name="stat_best">Best</string>
+    <string name="stat_dnf">DNF</string>
+    <string name="season_form">SEASON FORM</string>
+    <string name="season_results">RESULTS</string>
+    <string name="pick_two_drivers">Pick two drivers to compare their season.</string>
+    <string name="driver_a">Driver A</string>
+    <string name="driver_b">Driver B</string>
+    <string name="h2h_race_wins">Race wins (head-to-head)</string>
+    <string name="h2h_quali_wins">Qualifying wins (head-to-head)</string>
+    <string name="points_progression">POINTS PROGRESSION</string>
+    <string name="can_win_wdc">Can win WDC</string>
+    <string name="cant_win_wdc">Can’t win WDC</string>
+    <string name="title_decider">Title Decider</string>
+
+    <!-- Teams -->
+    <string name="no_teams_title">No Teams</string>
+    <string name="no_teams_message">No constructor data for %1$s.</string>
+    <string name="line_up">LINE-UP</string>
+
+    <!-- Standings -->
+    <string name="standings">Standings</string>
+    <string name="standings_drivers">Drivers</string>
+    <string name="standings_teams">Teams</string>
+    <string name="standings_form">Form</string>
+    <string name="standings_progress">Progress</string>
+    <string name="standings_reliability">Reliability</string>
+    <string name="standings_wdc">Title</string>
+    <string name="no_standings_title">No Standings</string>
+    <string name="no_standings_message">No standings for %1$s yet.</string>
+    <string name="finish_rate">Finish rate</string>
+    <string name="cause_mechanical">Mechanical</string>
+    <string name="cause_accident">Accident</string>
+    <string name="cause_disqualified">Disqualified</string>
+    <string name="cause_other">Other</string>
+    <string name="cause_finished">Finished</string>
+    <plurals name="races_count">
+        <item quantity="one">%1$d race</item>
+        <item quantity="other">%1$d races</item>
+    </plurals>
+
+    <!-- Circuits -->
+    <string name="circuits">Circuits</string>
+    <string name="circuit_raced">Raced</string>
+    <string name="circuit_upcoming">Upcoming</string>
+    <string name="no_circuits_title">No Circuits</string>
+    <string name="no_circuits_message">No circuit data for %1$s.</string>
+    <string name="circuit_length">Length</string>
+    <string name="circuit_corners">Corners</string>
+    <string name="circuit_laps">Laps</string>
+    <string name="fastest_lap">FASTEST LAP</string>
+    <string name="podium">PODIUM</string>
+    <string name="view_results">Full Results</string>
+    <string name="watch_replay">Watch Replay</string>
+    <string name="track_map_description">Track map of %1$s</string>
+    <string name="reset_zoom">Reset zoom</string>
+
+    <!-- Telemetry -->
+    <string name="telemetry_pick_title">Pick a Driver</string>
+    <string name="telemetry_pick_message">Select up to three drivers to compare their fastest-lap telemetry.</string>
+    <string name="telemetry_speed">Speed</string>
+    <string name="telemetry_throttle">Throttle</string>
+    <string name="telemetry_gear">Gear</string>
+    <string name="telemetry_brake">Brake</string>
+    <string name="unit_kmh">km/h</string>
+    <string name="unit_percent">%</string>
+    <string name="telemetry_unavailable_title">No Telemetry</string>
+    <string name="telemetry_unavailable_message">Telemetry isn\'t available for this driver at this race.</string>
+    <string name="telemetry_max_drivers">Up to three drivers can be compared at once.</string>
+    <string name="telemetry_lap_fastest">Fastest</string>
+    <string name="telemetry_lap_picker_label">%1$s: %2$s</string>
+    <string name="telemetry_lap_option">Lap %1$d: %2$s</string>
+    <string name="telemetry_lap_picker_description">Choose lap for %1$s</string>
+
+    <!-- Lap times -->
+    <string name="hide_outliers">Hide outliers</string>
+    <string name="select_all">All</string>
+    <string name="select_none">None</string>
+    <string name="no_lap_data_title">No Lap Data</string>
+    <string name="no_lap_data_message">Lap timing isn\'t available for this race.</string>
+
+    <!-- Strategy -->
+    <string name="pit_stops">%1$d stops</string>
+    <string name="pit_stop_one">1 stop</string>
+    <string name="no_strategy_title">No Strategy Data</string>
+    <string name="no_strategy_message">Tyre data isn\'t available for this race.</string>
+
+    <!-- Qualifying -->
+    <string name="gap_to_pole">Gap to pole</string>
+    <string name="no_qualifying_title">No Qualifying</string>
+    <string name="no_qualifying_message">Qualifying results aren\'t available for this race.</string>
+
+    <!-- Flags -->
+    <string name="no_flags_title">No Flags</string>
+    <string name="no_flags_message">Clean race: no yellow, red or safety-car periods were recorded.</string>
+    <plurals name="flag_periods_count">
+        <item quantity="one">%1$d flag period</item>
+        <item quantity="other">%1$d flag periods</item>
+    </plurals>
+    <string name="flags_across_laps">across %1$d laps</string>
+    <string name="flag_timeline_header">RACE CONTROL TIMELINE (%1$d)</string>
+    <string name="flag_type_yellow">Yellow Flag</string>
+    <string name="flag_type_double_yellow">Double Yellow</string>
+    <string name="flag_type_red">Red Flag</string>
+    <string name="flag_type_safety_car">Safety Car</string>
+    <string name="flag_type_virtual_safety_car">Virtual Safety Car</string>
+    <string name="flag_type_unknown">Flag</string>
+    <string name="flag_lap_single">Lap %1$d</string>
+    <string name="flag_lap_range">Laps %1$d–%2$d</string>
+    <string name="telemetry_flag_badge">%1$s (lap %2$d)</string>
+
+    <!-- Race Control -->
+    <string name="analysis_race_control">Race Control</string>
+    <string name="no_race_control_title">No Messages</string>
+    <string name="no_race_control_message">No race-control messages were recorded for this session.</string>
+    <string name="no_race_control_filter_message">No messages match this filter.</string>
+    <string name="race_control_filter_all">All</string>
+    <string name="race_control_filter_flags">Flags</string>
+    <string name="race_control_filter_safety_car">Safety Car</string>
+    <string name="race_control_filter_drs">DRS</string>
+    <string name="race_control_filter_incidents">Incidents</string>
+
+    <!-- Penalties -->
+    <string name="analysis_penalties">Penalties</string>
+    <string name="no_penalties_title">No Penalties</string>
+    <string name="no_penalties_message">No penalties were issued in this session.</string>
+
+    <!-- Weather -->
+    <string name="weather_air">Air</string>
+    <string name="weather_track">Track</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_pressure">Pressure</string>
+    <string name="weather_wind">Wind</string>
+    <string name="weather_rain">Rainfall</string>
+    <string name="weather_dry">Dry</string>
+    <string name="weather_wet">Wet</string>
+    <string name="weather_max">max %1$s</string>
+    <string name="no_weather_title">No Weather Data</string>
+    <string name="no_weather_message">Weather data isn\'t available for this session.</string>
+
+    <!-- Retirements -->
+    <string name="no_retirements_title">Everyone Finished</string>
+    <string name="no_retirements_message">No retirements were recorded for this race.</string>
+    <string name="retirement_lap">Lap %d</string>
+
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="settings_open">Open settings</string>
+    <string name="backend_server">Backend Server</string>
+    <string name="backend_url_label">Server address</string>
+    <string name="test_connection">Test Connection</string>
+    <string name="connection_ok">Connected</string>
+    <string name="connection_unhealthy">Server reachable but unhealthy</string>
+    <string name="connection_invalid_url">Invalid address</string>
+    <string name="connection_token_rejected">API token rejected</string>
+    <string name="connection_auth_required">This server requires an API token</string>
+    <string name="security">Security</string>
+    <string name="api_token">API Token</string>
+    <string name="api_token_label">API token (optional)</string>
+    <string name="api_token_show">Show token</string>
+    <string name="api_token_hide">Hide token</string>
+    <string name="api_token_footer">Matches the server\'s API_TOKEN. Leave empty if your backend runs without authentication. Stored encrypted on this device, never backed up.</string>
+    <string name="security_footer">This build authenticates with Google Play Integrity, the Android counterpart of the iOS app\'s Apple App Attest; no key is stored in the app. The token above is an optional admin/dev override that takes priority when set; leave it empty for a local backend running without auth, or to rely on Play Integrity once this build is signed and distributed through Play.</string>
+    <string name="reset_to_default">Reset to Default</string>
+    <string name="backend_footer">Run the FastF1 backend with ./run.sh, then enter its address here. The emulator reaches your machine at 10.0.2.2; a physical device needs your computer\'s LAN address or a deployed HTTPS URL.</string>
+    <string name="notifications">Notifications</string>
+    <string name="race_reminders">Race Reminders</string>
+    <string name="notifications_footer">Reminders are scheduled on this device for the current season, in your local timezone.</string>
+    <string name="remind_me">Remind me</string>
+    <string name="notify_day_before">The day before</string>
+    <string name="notify_1_hour">1 hour before</string>
+    <string name="notify_15_min">15 minutes before</string>
+    <string name="for_these_sessions">For these sessions</string>
+    <string name="session_practice">Practice</string>
+    <string name="session_qualifying">Qualifying</string>
+    <string name="session_sprint_label">Sprint</string>
+    <string name="session_race_label">Race</string>
+    <string name="notifications_denied_title">Notifications Disabled</string>
+    <string name="notifications_denied_message">Allow notifications for RaceControl in Android settings to receive race reminders.</string>
+    <string name="open_android_settings">Open Settings</string>
+    <string name="exact_alarms_title">Exact Alarms Unavailable</string>
+    <string name="exact_alarms_message">Android is not allowing RaceControl to schedule exact alarms, so reminders may arrive a few minutes late. You can grant this in Android settings under Alarms &amp; reminders.</string>
+    <string name="about">About</string>
+    <string name="about_data">FastF1 (2018–present)</string>
+    <string name="about_data_label">Data</string>
+    <string name="about_app_label">App</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="back">Back</string>
+
+    <!-- Notification channel -->
+    <string name="channel_reminders_name">Session reminders</string>
+    <string name="channel_reminders_description">Reminders before practice, qualifying, sprint and race sessions.</string>
+    <string name="reminder_starting_soon">%1$s starting soon</string>
+    <string name="reminder_in_1_hour">%1$s in 1 hour</string>
+    <string name="reminder_tomorrow">%1$s tomorrow</string>
+    <string name="reminder_body">%1$s · starts %2$s</string>
+    <string name="reminder_body_15">%1$s · starts %2$s (15 min)</string>
+
+    <!-- Session names -->
+    <string name="session_fp1">Practice 1</string>
+    <string name="session_fp2">Practice 2</string>
+    <string name="session_fp3">Practice 3</string>
+    <string name="session_q">Qualifying</string>
+    <string name="session_s">Sprint</string>
+    <string name="session_sq">Sprint Qualifying</string>
+    <string name="session_r">Race</string>
+    <string name="session_generic">Session</string>
+</resources>

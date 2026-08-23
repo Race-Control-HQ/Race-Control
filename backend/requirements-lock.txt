@@ -1,0 +1,94 @@
+# Reproducible install for CI and production images.
+#
+# `requirements.txt` is the human-edited floor/ceiling spec (what versions
+# are acceptable); this file is the fully-resolved, exact-version snapshot
+# actually installed, including transitive dependencies (fastf1 alone pulls
+# in pandas/numpy/scipy/matplotlib and more). `pip install -r requirements.txt`
+# with no lock gives a fresh production image whatever the resolver picks
+# that day -- this file makes "what's actually running" a repository diff
+# instead of a surprise.
+#
+# Generated against `python:3.12-slim` (the exact base image in
+# backend/Dockerfile) via:
+#     docker run --rm -v "$PWD/requirements.txt:/req.txt:ro" python:3.12-slim \
+#       sh -c "pip install --no-cache-dir -r /req.txt pytest httpx && pip freeze"
+# `pytest`/`httpx` are included because CI installs them alongside the app
+# dependencies (see .github/workflows/backend-ci.yml) -- they are test-only,
+# never imported by the running API, but locking them too keeps CI itself
+# reproducible.
+#
+# Regenerate with the same command whenever requirements.txt changes, review
+# the diff, then commit both files together. Dependabot (see
+# .github/dependabot.yml) opens a PR against requirements.txt on a weekly
+# cadence; regenerate this file as part of reviewing that PR.
+
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+asn1crypto==1.5.1
+attrs==26.1.0
+cattrs==26.1.0
+cbor2==6.1.3
+certifi==2026.7.22
+cffi==2.1.0
+charset-normalizer==3.4.9
+click==8.4.2
+contourpy==1.3.3
+cryptography==49.0.0
+cycler==0.12.1
+ecdsa==0.19.2
+fastapi==0.141.1
+fastf1==3.8.3
+fonttools==4.63.0
+google-auth==2.56.2
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.18
+iniconfig==2.3.0
+kiwisolver==1.5.0
+matplotlib==3.11.1
+msgpack==1.1.2
+numpy==2.5.1
+oscrypto==1.3.0
+packaging==26.2
+pandas==2.3.3
+pillow==12.3.0
+platformdirs==4.11.0
+pluggy==1.6.0
+pyasn1==0.6.4
+pyasn1_modules==0.4.2
+pyattest==1.0.5
+pycparser==3.0
+pydantic==2.13.4
+pydantic_core==2.46.4
+Pygments==2.20.0
+pyhanko-certvalidator==0.31.4
+PyJWT==2.13.0
+pyparsing==3.3.2
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.2
+python-jose==3.5.0
+pytz==2026.3.post1
+PyYAML==6.0.3
+RapidFuzz==3.14.5
+requests==2.34.2
+requests-cache==1.3.3
+rsa==4.9.1
+scipy==1.18.0
+signalrcore==1.0.2
+six==1.17.0
+starlette==1.3.1
+timple==0.1.8
+typing-inspection==0.4.2
+typing_extensions==4.16.0
+tzdata==2026.3
+uritools==6.1.3
+url-normalize==3.0.0
+urllib3==2.7.0
+uvicorn==0.52.0
+uvloop==0.22.1
+watchfiles==1.2.0
+websockets==17.0.1

@@ -1,0 +1,9 @@
+# Never ship local dev artefacts into the image
+.venv/
+.fastf1_cache/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.DS_Store
+run.sh

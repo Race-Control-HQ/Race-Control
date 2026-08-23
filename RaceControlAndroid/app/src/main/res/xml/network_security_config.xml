@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Mirrors the iOS App Transport Security policy: HTTPS everywhere, with plain
+  HTTP allowed only for local development targets.
+
+  Unlike iOS ATS, Android's network security config cannot express "any private
+  LAN address" - domains must be listed literally. So a *release* build can only
+  reach a cleartext backend on localhost or the emulator host alias. Pointing a
+  release build at http://192.168.x.x will fail; serve that backend over HTTPS,
+  or add the address below.
+
+  Debug builds permit cleartext everywhere (see src/debug/res).
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <!-- The emulator's alias for the host machine. -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>

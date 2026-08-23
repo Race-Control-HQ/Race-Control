@@ -1,0 +1,19 @@
+# Verified working set (Python 3.10+). fastf1 pulls pandas/numpy/scipy itself.
+#
+# This file is the human-edited floor/ceiling spec, not a reproducible build:
+# every entry below is version-unbounded except fastf1. For CI and production
+# images, install from requirements-lock.txt instead, which pins every direct
+# and transitive dependency to the exact version last verified to work.
+fastf1>=3.5,<4.0
+fastapi>=0.115
+uvicorn[standard]>=0.30
+
+# App Attest authentication for App Store distribution.
+pyattest>=0.1.1
+PyJWT>=2.3
+cbor2>=5.4
+cryptography>=42.0
+
+# Play Integrity authentication for Play Store distribution.
+google-auth>=2.29
+requests>=2.31

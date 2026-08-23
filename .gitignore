@@ -1,0 +1,20 @@
+# Python
+backend/.venv/
+backend/.fastf1_cache/
+__pycache__/
+*.pyc
+
+# Secrets - never commit real env files or the Play Integrity service
+# account key (backend/.env.example is a template and stays tracked).
+backend/.env
+backend/*.env
+backend/*service-account*.json
+backend/*.key.json
+
+# Xcode
+RaceControlApp/build/
+RaceControlApp/DerivedData/
+RaceControlAndroid/.kotlin/
+*.xcuserstate
+xcuserdata/
+.DS_Store

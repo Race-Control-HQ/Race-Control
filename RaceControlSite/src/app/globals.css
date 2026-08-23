@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/*
+ * Same fixed dark OLED palette as RaceControlWeb/src/app/globals.css, which
+ * itself is ported from the mobile design system
+ * (RaceControlAndroid/docs/FEATURES.md §5). Kept identical across the web
+ * app and this marketing site deliberately, NOT driven by
+ * prefers-color-scheme — team-color semantics stay consistent everywhere.
+ */
+:root {
+  --background: #0a0a0c;
+  --surface: #16161a;
+  --surface-raised: #1e1e23;
+  --border: #2a2a30;
+  --foreground: #f2f2f4;
+  --muted: #9a9aa2;
+  --racing-red: #e10600;
+  --racing-red-text: #ff5a50;
+  --positive: #30d158;
+  --negative: #ff453a;
+  --accent: #e10600;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-racing-red: var(--racing-red);
+  --color-racing-red-text: var(--racing-red-text);
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
