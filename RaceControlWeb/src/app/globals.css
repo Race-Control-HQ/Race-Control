@@ -49,3 +49,89 @@ body {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
+
+/*
+ * Horizontal scroll container for the wide data tables.
+ *
+ * The tables carry a `min-w-[Npx]` floor so they overflow rather than squash
+ * their columns on a phone. Overflow alone is not *discoverable* there though:
+ * these wrappers run taller than the viewport, so the horizontal scrollbar sits
+ * far below the fold, and mobile overlay scrollbars only paint while a scroll is
+ * already under way. Nothing says the table moves sideways, so it reads as
+ * broken -- which is exactly the bug this is here to fix.
+ *
+ * The edge highlights are that missing affordance, done with Komarov's shadow
+ * technique rather than a scroll listener: the two `local` layers scroll with
+ * the content and come to rest over an edge precisely when that edge has
+ * nothing left to reveal, masking the `scroll`-attached highlight beneath it. No
+ * state to go stale, nothing to re-render, and it tracks momentum scrolling for
+ * free.
+ */
+.table-scroll {
+  overflow-x: auto;
+  /* Keeps a swipe past the last column from being handed to the browser as a
+     back gesture. */
+  overscroll-behavior-x: contain;
+
+  background:
+    /* masks, pinned to the content so they slide off as you scroll */
+    linear-gradient(to right, var(--background), transparent) 0 0 / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--background), transparent) 100% 0 / 28px 100% no-repeat local,
+    /* highlights, pinned to the viewport of the scroller */
+    linear-gradient(to right, rgb(255 255 255 / 0.14), transparent) 0 0 / 14px 100% no-repeat scroll,
+    linear-gradient(to left, rgb(255 255 255 / 0.14), transparent) 100% 0 / 14px 100% no-repeat scroll;
+}
+
+/*
+ * Pinned leading columns for the wide data tables (see .table-scroll above).
+ *
+ * Position and identity stay put while the numbers scroll under them, so a
+ * scrolled row still says *who* it is -- pinning the position number on its own
+ * just leaves you reading anonymous ranks.
+ *
+ * Only below `md`: the min-w floors are all under a tablet's content width, so
+ * wider than this nothing overflows and a frozen-pane seam would be decoration
+ * marking a split that never happens.
+ */
+@media (max-width: 767px) {
+  /*
+   * These cells have to be opaque or the columns sliding underneath show
+   * straight through them, which rules out inheriting the row's translucent
+   * hover tint. The rules below mirror those tints with pre-composited
+   * equivalents instead, so a pinned cell and the rest of its row always land on
+   * the same shade.
+   */
+  .sticky-cell {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background: var(--background);
+  }
+
+  thead .sticky-cell {
+    z-index: 20;
+    background: var(--surface);
+  }
+
+  tbody tr:hover > .sticky-cell {
+    background: color-mix(in srgb, var(--surface) 60%, var(--background));
+  }
+
+  /* Fixed width so the identity column beside it can be offset by a constant. */
+  .sticky-cell-pos {
+    width: 3rem;
+  }
+
+  .sticky-cell-name {
+    left: 3rem;
+  }
+
+  /*
+   * The outermost pinned cell carries the seam between the frozen columns and
+   * the ones scrolling under them; without it the two halves read as one flat
+   * row and the scroll looks like a rendering glitch.
+   */
+  .sticky-cell-edge {
+    box-shadow: inset -1px 0 0 var(--border);
+  }
+}

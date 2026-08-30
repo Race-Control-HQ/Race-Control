@@ -50,8 +50,8 @@ export function QualifyingSectorsTab({ year, round }: { year: number; round: num
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="overflow-x-auto rounded-lg border border-border">
-        <table className="w-full text-sm">
+      <div className="table-scroll rounded-lg border border-border">
+        <table className="w-full min-w-[600px] text-sm">
           <thead className="bg-surface-raised text-left text-muted">
             <tr><th className="p-3">Driver</th><th>Lap</th><th>Ideal</th><th>Potential</th><th>Speed trap</th></tr>
           </thead>

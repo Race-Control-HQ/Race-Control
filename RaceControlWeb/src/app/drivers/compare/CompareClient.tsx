@@ -75,12 +75,12 @@ export function CompareClient({ defaultYear }: { defaultYear: number }) {
             const driverB = drivers?.find((d) => d.driverId === d2);
             return driverA && driverB ? <HeadToHeadFormLine year={year} a={driverA} b={driverB} /> : null;
           })()}
-          <div className="overflow-hidden rounded-lg border border-border">
-            <div className="grid grid-cols-2 gap-3 bg-surface px-3 py-3 text-center">
+          <div className="table-scroll rounded-lg border border-border">
+            <div className="grid min-w-[420px] grid-cols-2 gap-3 bg-surface px-3 py-3 text-center">
               <p className="truncate font-semibold">{data.drivers[0].name}</p>
               <p className="truncate font-semibold">{data.drivers[1].name}</p>
             </div>
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[420px] text-sm">
               <tbody className="divide-y divide-border">
                 <StatRow label="Points" a={data.drivers[0].points} b={data.drivers[1].points} />
                 <StatRow label="Wins" a={data.drivers[0].wins} b={data.drivers[1].wins} />

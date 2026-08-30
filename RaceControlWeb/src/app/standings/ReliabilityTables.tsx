@@ -43,65 +43,67 @@ function ReliabilityTable({
   return (
     <div className="overflow-hidden rounded-lg border border-border">
       <div className="bg-surface px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted">{title}</div>
-      <table className="w-full text-sm">
-        <thead className="bg-surface/60 text-left text-xs uppercase tracking-wide text-muted">
-          <tr>
-            <th className="px-3 py-2 font-medium">Name</th>
-            {COLUMNS.map((col) => (
-              <th key={col.key} className="tabular px-3 py-2 text-right font-medium">
-                <button
-                  type="button"
-                  onClick={() => onSort(col.key)}
-                  className="inline-flex items-center gap-1 hover:text-foreground"
-                >
-                  {col.label}
-                  {sortKey === col.key && <span>{sortDir === 1 ? "↑" : "↓"}</span>}
-                </button>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {sorted.map((r) => {
-            const id = r.driverId ?? r.teamId ?? String(r[nameKey]);
-            const expanded = expandedId === id;
-            return (
-              <Fragment key={id}>
-                <tr
-                  className="cursor-pointer hover:bg-surface/60"
-                  onClick={() => onToggleExpand(id)}
-                  aria-expanded={expanded}
-                >
-                  <td className="px-3 py-2 font-medium">
-                    {showLogo ? (
-                      <span className="inline-flex items-center gap-2">
-                        <TeamLogo src={r.teamLogoUrl} name={r.teamName} sizeClassName="h-5 w-5" />
-                        {r[nameKey]}
-                      </span>
-                    ) : (
-                      r[nameKey]
-                    )}
-                  </td>
-                  <td className="tabular px-3 py-2 text-right">{r.starts}</td>
-                  <td className="tabular px-3 py-2 text-right">{r.finished}</td>
-                  <td className="tabular px-3 py-2 text-right">{r.mechanical}</td>
-                  <td className="tabular px-3 py-2 text-right">{r.accident}</td>
-                  <td className="tabular px-3 py-2 text-right">{r.dnf}</td>
-                  <td className="tabular px-3 py-2 text-right">{r.finishRate}%</td>
-                </tr>
-                {expanded && (
-                  <tr className="bg-surface/40">
-                    <td colSpan={COLUMNS.length + 1} className="px-3 py-2 text-xs text-muted">
-                      <span className="mr-4">Disqualified: {r.disqualified}</span>
-                      <span>Other: {r.other}</span>
+      <div className="table-scroll">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead className="border-b border-border bg-surface text-left text-xs uppercase tracking-wide text-muted">
+            <tr>
+              <th className="sticky-cell sticky-cell-edge px-3 py-2 font-medium">Name</th>
+              {COLUMNS.map((col) => (
+                <th key={col.key} className="tabular px-3 py-2 text-right font-medium">
+                  <button
+                    type="button"
+                    onClick={() => onSort(col.key)}
+                    className="inline-flex items-center gap-1 hover:text-foreground"
+                  >
+                    {col.label}
+                    {sortKey === col.key && <span>{sortDir === 1 ? "↑" : "↓"}</span>}
+                  </button>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {sorted.map((r) => {
+              const id = r.driverId ?? r.teamId ?? String(r[nameKey]);
+              const expanded = expandedId === id;
+              return (
+                <Fragment key={id}>
+                  <tr
+                    className="cursor-pointer hover:bg-surface/60"
+                    onClick={() => onToggleExpand(id)}
+                    aria-expanded={expanded}
+                  >
+                    <td className="sticky-cell sticky-cell-edge px-3 py-2 font-medium">
+                      {showLogo ? (
+                        <span className="inline-flex items-center gap-2">
+                          <TeamLogo src={r.teamLogoUrl} name={r.teamName} sizeClassName="h-5 w-5" />
+                          {r[nameKey]}
+                        </span>
+                      ) : (
+                        r[nameKey]
+                      )}
                     </td>
+                    <td className="tabular px-3 py-2 text-right">{r.starts}</td>
+                    <td className="tabular px-3 py-2 text-right">{r.finished}</td>
+                    <td className="tabular px-3 py-2 text-right">{r.mechanical}</td>
+                    <td className="tabular px-3 py-2 text-right">{r.accident}</td>
+                    <td className="tabular px-3 py-2 text-right">{r.dnf}</td>
+                    <td className="tabular px-3 py-2 text-right">{r.finishRate}%</td>
                   </tr>
-                )}
-              </Fragment>
-            );
-          })}
-        </tbody>
-      </table>
+                  {expanded && (
+                    <tr className="bg-surface/40">
+                      <td colSpan={COLUMNS.length + 1} className="px-3 py-2 text-xs text-muted">
+                        <span className="mr-4">Disqualified: {r.disqualified}</span>
+                        <span>Other: {r.other}</span>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

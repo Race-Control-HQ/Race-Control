@@ -220,8 +220,8 @@ export default function PlatformsPage() {
           title="What's on which platform"
           subtitle="Most features are on all three. These are the ones that aren't, and why."
         />
-        <div className="overflow-x-auto rounded-xl border border-border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto overscroll-x-contain rounded-xl border border-border">
+          <table className="w-full min-w-[640px] text-sm">
             <thead>
               <tr className="border-b border-border text-left">
                 <th className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted">Feature</th>
