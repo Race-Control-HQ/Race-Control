@@ -15,5 +15,5 @@ cbor2>=5.4
 cryptography>=42.0
 
 # Play Integrity authentication for Play Store distribution.
-google-auth>=2.56.3
+google-auth>=2.58.0
 requests>=2.31
