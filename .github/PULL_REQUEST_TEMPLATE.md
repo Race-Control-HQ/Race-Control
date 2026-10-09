@@ -19,5 +19,5 @@
 
 - [ ] Tests added or updated for changed behaviour
 - [ ] README or docs updated if setup, endpoints or configuration changed
-- [ ] `requirements-lock.txt` regenerated if `backend/requirements.txt` changed
+- [ ] `backend/requirements.txt` recompiled with pip-compile if `backend/requirements.in` changed
 - [ ] No secrets, keys or real `.env` values committed

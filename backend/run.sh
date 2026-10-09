@@ -11,7 +11,7 @@ fi
 source .venv/bin/activate
 
 pip install --quiet --upgrade pip
-pip install --quiet -r requirements.txt
+pip install --quiet -r requirements.in
 
 echo "Starting RaceControl API on http://localhost:8000  (docs at /docs)"
 exec uvicorn main:app --host 0.0.0.0 --port 8000 --reload

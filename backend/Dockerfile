@@ -15,13 +15,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies first so this layer caches across code changes.
-# requirements-lock.txt pins every direct + transitive dependency to the
-# exact version verified against this same python:3.12-slim base image (see
-# its header for how to regenerate); requirements.txt alone leaves every
-# entry but fastf1 version-unbounded, which is unreproducible for a
-# security-sensitive auth stack (PyJWT, cryptography, google-auth).
-COPY requirements.txt requirements-lock.txt ./
-RUN pip install --no-cache-dir -r requirements-lock.txt
+# requirements.txt is compiled by pip-compile from requirements.in and pins
+# every direct + transitive dependency to the exact version verified against
+# this same python:3.12-slim base image (see requirements.in for how to
+# recompile); requirements.in alone leaves every entry but fastf1
+# version-unbounded, which is unreproducible for a security-sensitive auth
+# stack (PyJWT, cryptography, google-auth).
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

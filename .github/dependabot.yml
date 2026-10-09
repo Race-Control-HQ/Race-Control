@@ -1,11 +1,9 @@
 version: 2
 updates:
-  # backend: Python (pip) dependencies. requirements.txt sets floors/ceilings;
-  # requirements-lock.txt pins the exact resolved set actually installed (see
-  # its header). Updates are grouped into one weekly PR because the lock file
-  # is a `pip freeze` snapshot: bumping a single pin on its own can leave the
-  # set unresolvable. If the grouped PR still fails to install, regenerate
-  # requirements-lock.txt with the command in its header and push to the PR.
+  # backend: Python (pip) dependencies. requirements.in sets floors/ceilings;
+  # requirements.txt is the pip-compile lock actually installed. Dependabot
+  # detects the pair and re-runs pip-compile itself, so each PR carries a
+  # resolved lock. Grouped into one weekly PR to keep the noise down.
   - package-ecosystem: "pip"
     directory: "/backend"
     schedule:

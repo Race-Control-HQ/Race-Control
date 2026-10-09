@@ -54,6 +54,7 @@ The domain boundaries, as they exist today:
   leftmost `X-Forwarded-For` entry; that's only safe because Coolify/Traefik is the
   sole ingress and overwrites that header. See `Dockerfile`'s `CMD` and
   `test_main_infra.py::test_dockerfile_declares_the_proxy_trust_boundary`.
-- **Dependencies**: `requirements.txt` is the human-edited floor/ceiling spec;
-  `requirements-lock.txt` is the reproducible, exact-version install used by CI and
-  the Docker image (see its header for how to regenerate it).
+- **Dependencies**: `requirements.in` is the human-edited floor/ceiling spec;
+  `requirements.txt` is the pip-compile lock compiled from it, the reproducible,
+  exact-version install used by CI and the Docker image (see the header of
+  `requirements.in` for how to recompile it).
