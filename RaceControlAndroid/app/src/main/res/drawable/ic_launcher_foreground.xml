@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Chequered-flag mark. Placeholder artwork: swap for final brand assets
-     before release (docs/TASKS.md 9.1). -->
+     before release (the Android build plan 9.1 in RaceControlDocs). -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"

@@ -16,7 +16,7 @@ export default function FeaturesPage() {
       <SectionHeading
         eyebrow="Features"
         title={`${FEATURES.length} features, screen by screen`}
-        subtitle="Every screen in the app, what's on it, and which platforms have it. Where a platform deliberately differs, that's called out rather than hidden — the full reasoning for each divergence lives in the Android app's FEATURES.md."
+        subtitle="Every screen in the app, what's on it, and which platforms have it. Where a platform deliberately differs, that's called out rather than hidden — the full reasoning for each divergence lives in the docs' Android feature inventory."
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

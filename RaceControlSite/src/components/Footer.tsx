@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/config";
 
 const LINK_CLASS =
   "underline decoration-border underline-offset-2 transition-colors hover:text-foreground hover:decoration-foreground";
@@ -6,9 +7,10 @@ const LINK_CLASS =
 const NAV = [
   { href: "/features", label: "Features" },
   { href: "/platforms", label: "Platforms" },
-  { href: "/docs", label: "Docs" },
-  { href: "/docs/api", label: "API reference" },
-  { href: "/docs/self-hosting", label: "Self-hosting" },
+  { href: siteConfig.docsUrl, label: "Docs" },
+  { href: siteConfig.docsUrl + "/api/", label: "API reference" },
+  { href: siteConfig.docsUrl + "/self-hosting/", label: "Self-hosting" },
+  { href: siteConfig.docsUrl + "/contributing/", label: "Contributing" },
   { href: "/open-source", label: "Open source" },
 ];
 

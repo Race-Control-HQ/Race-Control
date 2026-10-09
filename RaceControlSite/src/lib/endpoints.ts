@@ -1,8 +1,8 @@
-// The complete public API surface, transcribed from the root README's endpoint
-// tables (§1 "Endpoints" and "Derived analysis endpoints").
+// The public API surface, mirroring the docs' API reference
+// (../RaceControlDocs/docs/api/endpoints.md and analytics.md).
 //
-// Typed data rather than a static table in JSX so the docs page can filter and
-// search it, and so there's exactly one place to update when the API changes.
+// Typed data rather than prose in JSX so the home page's endpoint counts come
+// from one list. Update it alongside the docs when the API changes.
 
 export type Endpoint = {
   method: "GET";

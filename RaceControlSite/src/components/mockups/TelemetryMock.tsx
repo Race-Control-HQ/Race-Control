@@ -1,6 +1,6 @@
 import { TEAM_COLORS } from "./tokens";
 
-// Illustration of the Telemetry screen (FEATURES.md §3.8): speed and throttle
+// Illustration of the Telemetry screen (Android feature inventory §3.8, in the docs): speed and throttle
 // traces over lap distance with two drivers overlaid, plus the playhead the
 // real screen sweeps along with the mini track map.
 

@@ -1,0 +1,81 @@
+.doc-img {
+  cursor: zoom-in;
+  margin-top: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.doc-img.sm {
+  max-width: 200px;
+}
+.doc-img.md {
+  max-width: 320px;
+}
+.doc-img.lg {
+  max-width: 480px;
+}
+
+.doc-img:hover {
+  transform: scale(1.02);
+}
+
+/* Screenshots: any image placed directly in a doc page. */
+.vp-doc p > img,
+.vp-doc img[src^="/images/"] {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  cursor: zoom-in;
+}
+
+
+/* Keep the nav search clear of the logo and title wherever they sit side by
+   side: the home page, and doc pages below the sidebar breakpoint. */
+@media (min-width: 768px) {
+  .VPNavBar .VPNavBarSearch {
+    margin-left: 24px !important;
+  }
+}
+
+/* On doc pages the title is taken out of the nav's flow even while the sidebar
+   is collapsed, so at tablet widths the search has to be pushed past it by
+   hand (logo + site title ends at about 168px; the nav starts at 48px). There is
+   only room for the icon beside the nav links here. */
+@media (min-width: 768px) and (max-width: 959px) {
+  .VPNavBar.has-sidebar .VPNavBarSearch {
+    margin-left: 144px !important;
+  }
+  .VPNavBar.has-sidebar .VPNavBarSearchButton .text,
+  .VPNavBar.has-sidebar .VPNavBarSearchButton .keys {
+    display: none !important;
+  }
+}
+
+/* The logo/title is pinned over the sidebar column, so start the nav search
+   after that column instead of underneath the title. */
+@media (min-width: 960px) {
+  .VPNavBar.has-sidebar .VPNavBarSearch {
+    margin-left: calc(var(--vp-sidebar-width) - 32px) !important;
+  }
+}
+
+/* Between the sidebar breakpoint and a roomy desktop there is not enough width
+   for the search label next to the nav links, so show just the icon. */
+@media (min-width: 960px) and (max-width: 1279px) {
+  /* The sidebar already lists every section, so drop the duplicate top links. */
+  .VPNavBar.has-sidebar .VPNavBarMenu {
+    display: none !important;
+  }
+  .VPNavBarSearch .DocSearch-Button-Placeholder,
+  .VPNavBarSearch .DocSearch-Button-Keys,
+  .VPNavBarSearch .DocSearch-Button .DocSearch-Button-Key {
+    display: none !important;
+  }
+  .VPNavBarSearch .DocSearch-Button {
+    min-width: 0 !important;
+    width: 40px !important;
+  }
+}

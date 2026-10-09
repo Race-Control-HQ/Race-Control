@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Read the documentation
+    url: https://docs.getracecontrol.com
+    about: Setup guides, the API reference, troubleshooting and common questions.
   - name: Ask a question or share an idea
     url: https://github.com/Race-Control-HQ/Race-Control/discussions
     about: Questions, ideas and general chat belong in Discussions rather than issues.

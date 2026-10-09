@@ -4,9 +4,25 @@
     {
       "name": "web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000,
       "cwd": "RaceControlWeb"
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "docs:dev",
+        "--",
+        "--port",
+        "5173"
+      ],
+      "port": 5173,
+      "cwd": "RaceControlDocs"
     }
   ]
 }

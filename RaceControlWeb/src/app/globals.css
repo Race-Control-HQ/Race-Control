@@ -2,7 +2,7 @@
 
 /*
  * Fixed dark OLED palette ported from the mobile design system
- * (RaceControlAndroid/docs/FEATURES.md §5). Deliberately NOT driven by
+ * (RaceControlDocs/docs/architecture/design-system.md). Deliberately NOT driven by
  * prefers-color-scheme — team-color semantics need to stay consistent,
  * same reasoning the Android app used to disable Material You theming.
  */

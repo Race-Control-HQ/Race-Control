@@ -1,6 +1,6 @@
 import { TYRE_COLORS } from "./tokens";
 
-// Illustration of the Tyre Strategy screen (FEATURES.md §3.8): a per-driver
+// Illustration of the Tyre Strategy screen (Android feature inventory §3.8, in the docs): a per-driver
 // stint timeline across race distance, coloured by compound, with pit counts.
 
 const STINTS: { code: string; stints: { c: keyof typeof TYRE_COLORS; laps: number }[] }[] = [

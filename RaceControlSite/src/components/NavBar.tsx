@@ -9,7 +9,6 @@ const TABS = [
   { href: "/", label: "Overview" },
   { href: "/features", label: "Features" },
   { href: "/platforms", label: "Platforms" },
-  { href: "/docs", label: "Docs" },
   { href: "/open-source", label: "Open source" },
 ];
 
@@ -43,6 +42,12 @@ export function NavBar() {
               {tab.label}
             </Link>
           ))}
+          <a
+            href={siteConfig.docsUrl}
+            className="whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium text-muted transition-colors hover:text-foreground"
+          >
+            Docs ↗
+          </a>
         </nav>
         <a
           href={siteConfig.githubRepo}

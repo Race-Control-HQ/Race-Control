@@ -230,7 +230,7 @@ _TTL_SECONDS = int(os.environ.get("CACHE_TTL_SECONDS", 60 * 60 * 6))
 # fastf1_service: the TTL is only consulted on read, so an entry nobody asks
 # for again is retained forever. Keys multiply across year x round x session x
 # driver, and some payloads (telemetry, replay positions) are large, on a
-# container the README sizes at 1-2 GB.
+# container the self-hosting docs size at 1-2 GB.
 _CACHE_MAX_ENTRIES = int(os.environ.get("CACHE_MAX_ENTRIES", 256))
 
 

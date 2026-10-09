@@ -1,6 +1,6 @@
 import { FLAG_COLORS } from "./tokens";
 
-// Illustration of the Flags screen (FEATURES.md §3.10): collapsed flag and
+// Illustration of the Flags screen (Android feature inventory §3.10, in the docs): collapsed flag and
 // safety-car periods with icon, colour, type label, inclusive lap range and
 // reason, over a collapsed raw race-control timeline disclosure.
 
