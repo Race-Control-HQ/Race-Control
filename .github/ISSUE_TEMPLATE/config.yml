@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Ask a question or share an idea
+    url: https://github.com/Race-Control-HQ/Race-Control/discussions
+    about: Questions, ideas and general chat belong in Discussions rather than issues.
   - name: Report a security vulnerability
     url: https://github.com/Race-Control-HQ/Race-Control/security/advisories/new
     about: Please report security issues privately, not as a public issue.

@@ -1,0 +1,31 @@
+# Categories for GitHub's auto-generated release notes ("Generate release
+# notes" in the release UI, or `gh release create --generate-notes`). Pull
+# requests are sorted by label; the first matching category wins.
+changelog:
+  exclude:
+    labels:
+      - duplicate
+      - invalid
+      - wontfix
+  categories:
+    - title: New features
+      labels:
+        - enhancement
+    - title: Bug fixes
+      labels:
+        - bug
+    - title: Accessibility
+      labels:
+        - accessibility
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Dependencies
+      labels:
+        - dependencies
+    - title: CI and tooling
+      labels:
+        - ci
+    - title: Other changes
+      labels:
+        - "*"

@@ -7,6 +7,7 @@ all welcome. By taking part you agree to follow the [Code of Conduct](CODE_OF_CO
 
 - **Bugs and feature requests:** open an [issue](https://github.com/Race-Control-HQ/Race-Control/issues/new/choose)
   using the matching form. Search existing issues first.
+- **Questions and ideas:** start a [discussion](https://github.com/Race-Control-HQ/Race-Control/discussions).
 - **Security vulnerabilities:** do not open a public issue. Follow [SECURITY.md](SECURITY.md).
 - **Larger changes:** open an issue to discuss the approach before writing code, so nobody
   builds something that can't be merged.
