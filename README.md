@@ -22,22 +22,27 @@ The web app additionally fronts the backend with a small BFF layer (see
 [`RaceControlWeb/README.md`](RaceControlWeb/README.md)), since a browser can't do the device
 attestation the mobile apps use.
 
-[![Backend CI](https://github.com/Owl-Media/RaceControl/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/Owl-Media/RaceControl/actions/workflows/backend-ci.yml)
-[![Android CI](https://github.com/Owl-Media/RaceControl/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Owl-Media/RaceControl/actions/workflows/android-ci.yml)
-[![iOS CI](https://github.com/Owl-Media/RaceControl/actions/workflows/ios-ci.yml/badge.svg)](https://github.com/Owl-Media/RaceControl/actions/workflows/ios-ci.yml)
-[![Site CI](https://github.com/Owl-Media/RaceControl/actions/workflows/site-ci.yml/badge.svg)](https://github.com/Owl-Media/RaceControl/actions/workflows/site-ci.yml)
+[![Backend CI](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/backend-ci.yml)
+[![Android CI](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/android-ci.yml/badge.svg)](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/android-ci.yml)
+[![iOS CI](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/ios-ci.yml/badge.svg)](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/ios-ci.yml)
+[![Web CI](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/web-ci.yml/badge.svg)](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/web-ci.yml)
+[![Site CI](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/site-ci.yml/badge.svg)](https://github.com/Race-Control-HQ/Race-Control/actions/workflows/site-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ### Continuous integration
 
-Four independent GitHub Actions workflows in [`.github/workflows/`](.github/workflows/),
+Five independent GitHub Actions workflows in [`.github/workflows/`](.github/workflows/),
 each path-filtered so a change to one piece doesn't run the others' checks:
 
 | Workflow | Runs on changes to | What it does |
 |---|---|---|
-| `backend-ci.yml` | `backend/**` | Installs `requirements.txt` + `pytest`/`httpx`, runs `test_attest.py` and `test_attest_endpoints.py`, then imports `main.py` with no env vars to confirm the open-by-default local-dev path still boots. |
+| `backend-ci.yml` | `backend/**` | Installs `requirements-lock.txt`, checks the lock file covers every direct dependency in `requirements.txt`, runs the whole `pytest` suite, then imports `main.py` with no env vars to confirm the open-by-default local-dev path still boots. |
 | `android-ci.yml` | `RaceControlAndroid/**` | `./gradlew testDebugUnitTest` then `./gradlew assembleDebug`; uploads the test reports as a build artifact. |
-| `ios-ci.yml` | `RaceControlApp/**` | Unsigned `xcodebuild build` against `generic/platform=iOS Simulator`, on a macOS runner. |
+| `ios-ci.yml` | `RaceControlApp/**` | Unsigned `xcodebuild build` against `generic/platform=iOS Simulator`, then `xcodebuild test` on an iPhone simulator, on a macOS runner. |
+| `web-ci.yml` | `RaceControlWeb/**` | `npm ci`, `npm run lint`, `npm run build` for the web app. |
 | `site-ci.yml` | `RaceControlSite/**` | `npm ci`, `npm run lint`, `npm run build` for the project site. |
+
+A sixth workflow, `labeler.yml`, labels pull requests by the component they touch.
 
 This is CI only; nothing here deploys anywhere. Deploying the backend to Coolify is still
 the manual process in section 1b below, and there's no Play Store or TestFlight upload wired
@@ -474,3 +479,13 @@ flowchart LR
 Data is sourced live by FastF1 from the F1 live-timing API and the Ergast/Jolpica database.
 This is an unofficial project and is not associated with Formula 1 companies. F1, FORMULA 1
 and related marks are trademarks of Formula One Licensing BV.
+
+## 7. Contributing
+
+Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and
+the checks to run, and the [Code of Conduct](CODE_OF_CONDUCT.md). Report security issues
+privately as described in [SECURITY.md](SECURITY.md).
+
+## 8. License
+
+Released under the [MIT License](LICENSE).

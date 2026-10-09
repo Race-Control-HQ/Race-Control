@@ -1,0 +1,28 @@
+# Path-to-label mapping for .github/workflows/labeler.yml.
+backend:
+  - changed-files:
+      - any-glob-to-any-file: "backend/**"
+
+ios:
+  - changed-files:
+      - any-glob-to-any-file: "RaceControlApp/**"
+
+android:
+  - changed-files:
+      - any-glob-to-any-file: "RaceControlAndroid/**"
+
+web:
+  - changed-files:
+      - any-glob-to-any-file: "RaceControlWeb/**"
+
+site:
+  - changed-files:
+      - any-glob-to-any-file: "RaceControlSite/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md", "docs/**"]

@@ -1,27 +1,27 @@
-name: Site CI
+name: Web CI
 
 on:
   push:
     branches: [main]
     paths:
-      - "RaceControlSite/**"
-      - ".github/workflows/site-ci.yml"
+      - "RaceControlWeb/**"
+      - ".github/workflows/web-ci.yml"
   pull_request:
     paths:
-      - "RaceControlSite/**"
-      - ".github/workflows/site-ci.yml"
+      - "RaceControlWeb/**"
+      - ".github/workflows/web-ci.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: site-ci-${{ github.ref }}
+  group: web-ci-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
   run:
-    working-directory: RaceControlSite
+    working-directory: RaceControlWeb
 
 jobs:
   build:
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: RaceControlSite/package-lock.json
+          cache-dependency-path: RaceControlWeb/package-lock.json
 
       - name: Install dependencies
         run: npm ci
