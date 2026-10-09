@@ -13,12 +13,12 @@ export function DriversStandingsTable({ year }: { year: number }) {
   if (!data || data.length === 0) return <EmptyState message="No standings available for this season." />;
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
-      <table className="w-full text-sm">
+    <div className="table-scroll rounded-lg border border-border">
+      <table className="w-full min-w-[560px] text-sm">
         <thead className="bg-surface text-left text-xs uppercase tracking-wide text-muted">
           <tr>
-            <th className="px-3 py-2 font-medium">Pos</th>
-            <th className="px-3 py-2 font-medium">Driver</th>
+            <th className="sticky-cell sticky-cell-pos px-3 py-2 font-medium">Pos</th>
+            <th className="sticky-cell sticky-cell-name sticky-cell-edge px-3 py-2 font-medium">Driver</th>
             <th className="px-3 py-2 font-medium">Team</th>
             <th className="px-3 py-2 text-right font-medium">Wins</th>
             <th className="px-3 py-2 text-right font-medium">Points</th>
@@ -27,8 +27,10 @@ export function DriversStandingsTable({ year }: { year: number }) {
         <tbody className="divide-y divide-border">
           {data.map((d) => (
             <tr key={d.driverId} className="hover:bg-surface/60">
-              <td className="tabular px-3 py-2 text-muted">{d.position ?? "-"}</td>
-              <td className="px-3 py-2 font-medium">
+              <td className="sticky-cell sticky-cell-pos tabular px-3 py-2 text-muted">
+                {d.position ?? "-"}
+              </td>
+              <td className="sticky-cell sticky-cell-name sticky-cell-edge px-3 py-2 font-medium">
                 <Link href={`/drivers/${year}/${d.driverId}`} className="hover:text-racing-red">
                   {d.givenName} {d.familyName}
                   {d.driverCode ? <span className="ml-1 text-muted">({d.driverCode})</span> : null}

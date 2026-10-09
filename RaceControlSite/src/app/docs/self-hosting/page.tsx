@@ -35,8 +35,8 @@ export default function SelfHostingPage() {
       />
 
       <DocSection title="The three services">
-        <div className="overflow-x-auto rounded-xl border border-border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto overscroll-x-contain rounded-xl border border-border">
+          <table className="w-full min-w-[720px] text-sm">
             <thead>
               <tr className="border-b border-border text-left">
                 {["Service", "Base directory", "Port", "Health check", "Volume"].map((h) => (
@@ -68,8 +68,8 @@ RACECONTROL_API_TOKEN=<same value as the backend's API_TOKEN>`}</CodeBlock>
       </DocSection>
 
       <DocSection title="Backend environment variables">
-        <div className="overflow-x-auto rounded-xl border border-border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto overscroll-x-contain rounded-xl border border-border">
+          <table className="w-full min-w-[560px] text-sm">
             <tbody>
               {ENV.map(([name, value, note]) => (
                 <tr key={name} className="border-b border-border last:border-0">

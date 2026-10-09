@@ -63,8 +63,8 @@ export default async function DriverDetailPage({
       <DriverFingerprint year={Number(year)} driverId={driver.driverId} color={driver.teamColor} />
 
       <h2 className="mb-3 text-lg font-semibold">Season Results</h2>
-      <div className="overflow-hidden rounded-lg border border-border">
-        <table className="w-full text-sm">
+      <div className="table-scroll rounded-lg border border-border">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-surface text-left text-xs uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2 font-medium">Rnd</th>

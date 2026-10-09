@@ -62,8 +62,8 @@ export function PitStopsTab({ year, round }: { year: number; round: number }) {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="overflow-x-auto rounded-lg border border-border">
-        <table className="w-full text-sm">
+      <div className="table-scroll rounded-lg border border-border">
+        <table className="w-full min-w-[620px] text-sm">
           <thead className="bg-surface-raised text-left text-muted">
             <tr><th className="p-3">Stop</th><th>Transit</th><th>Positions</th><th>Outcome</th><th>Rivals</th></tr>
           </thead>

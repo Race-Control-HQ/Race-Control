@@ -191,8 +191,8 @@ export function WdcCalculatorTable({ year }: { year: number }) {
         scores nothing else), not a realistic forecast.
       </p>
 
-      <div className="overflow-x-auto rounded-lg border border-border">
-        <table className="w-full text-sm">
+      <div className="table-scroll rounded-lg border border-border">
+        <table className="w-full min-w-[840px] text-sm">
           <thead className="bg-surface text-left text-xs uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2 font-medium">Pos</th>
