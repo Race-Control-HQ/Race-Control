@@ -9,6 +9,9 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    # Only move pins in the compiled lock; leave the floors in requirements.in
+    # as the minimum versions the code actually needs.
+    versioning-strategy: lockfile-only
     groups:
       backend:
         patterns: ["*"]
@@ -23,6 +26,18 @@ updates:
     groups:
       web-minor-patch:
         update-types: ["minor", "patch"]
+    ignore:
+      # Types must match the Node major we run (node:20 in the Dockerfile and
+      # CI). Bump by hand together with the runtime.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # Blocked upstream as of 2026-10: eslint-config-next's typescript-eslint
+      # rejects TypeScript 7, and its eslint-plugin-react breaks on ESLint 10.
+      # Remove these two entries once a Next.js release supports them.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/RaceControlSite"
@@ -32,6 +47,18 @@ updates:
     groups:
       site-minor-patch:
         update-types: ["minor", "patch"]
+    ignore:
+      # Types must match the Node major we run (node:20 in the Dockerfile and
+      # CI). Bump by hand together with the runtime.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # Blocked upstream as of 2026-10: eslint-config-next's typescript-eslint
+      # rejects TypeScript 7, and its eslint-plugin-react breaks on ESLint 10.
+      # Remove these two entries once a Next.js release supports them.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   # Android: Gradle plugins and libraries from gradle/libs.versions.toml.
   - package-ecosystem: "gradle"
