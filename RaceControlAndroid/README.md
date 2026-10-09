@@ -19,7 +19,8 @@ See [`docs/FEATURES.md`](docs/FEATURES.md) for the full iOS→Android mapping an
 
 ## 1. Build it
 
-Requirements: **Android Studio Ladybug or newer**, JDK 17.
+Requirements: an **Android Studio release that supports AGP 9.4**, JDK 17, and
+Android SDK Platform 37 (`compileSdk`). The Gradle wrapper pins Gradle 9.8.0.
 
 ```bash
 # from this directory
