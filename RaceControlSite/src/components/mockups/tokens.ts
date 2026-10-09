@@ -3,7 +3,7 @@
 // These mirror the values the real apps use, where "colour is data": official
 // constructor liveries and the FIA tyre compound colours. The apps treat these
 // as semantic (which is exactly why Android disables Material You dynamic
-// colour — see RaceControlAndroid/docs/FEATURES.md §5), so the illustrations
+// colour — see RaceControlDocs/docs/architecture/design-system.md), so the illustrations
 // have to use the same values or they'd misrepresent the UI.
 
 export const TEAM_COLORS: Record<string, string> = {

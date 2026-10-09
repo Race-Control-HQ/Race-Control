@@ -142,7 +142,7 @@ export default function PlatformsPage() {
               View source
             </a>
             <a
-              href={siteConfig.githubRepo + "/blob/main/RaceControlAndroid/docs/FEATURES.md"}
+              href={siteConfig.docsUrl + "/architecture/android-feature-inventory"}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-foreground"

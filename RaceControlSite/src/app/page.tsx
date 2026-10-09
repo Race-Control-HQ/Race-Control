@@ -30,7 +30,7 @@ const PIECES = [
     title: "Backend",
     tech: "Python · FastAPI",
     desc: `One service exposing ${ENDPOINTS.length} REST endpoints over FastF1, feeding all three clients.`,
-    href: "/docs/architecture",
+    href: siteConfig.docsUrl + "/architecture/",
   },
 ];
 
@@ -218,7 +218,7 @@ export default function Home() {
             docs cover local setup, environment variables, volumes and the proxy trust boundary.
           </p>
           <Link
-            href="/docs/self-hosting"
+            href={siteConfig.docsUrl + "/self-hosting/"}
             className="mt-auto rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-foreground"
           >
             Self-hosting guide

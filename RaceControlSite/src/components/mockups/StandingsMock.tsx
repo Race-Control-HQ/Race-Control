@@ -1,6 +1,6 @@
 import { TEAM_COLORS } from "./tokens";
 
-// Illustration of the Standings screen (FEATURES.md §3.6): the four-mode
+// Illustration of the Standings screen (Android feature inventory §3.6, in the docs): the four-mode
 // selector, then rank, driver, team, points, wins and a gap-to-leader bar.
 
 const ROWS = [

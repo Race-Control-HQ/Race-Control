@@ -19,10 +19,14 @@ site:
   - changed-files:
       - any-glob-to-any-file: "RaceControlSite/**"
 
+docs:
+  - changed-files:
+      - any-glob-to-any-file: "RaceControlDocs/**"
+
 ci:
   - changed-files:
       - any-glob-to-any-file: ".github/**"
 
 documentation:
   - changed-files:
-      - any-glob-to-any-file: ["**/*.md", "docs/**"]
+      - any-glob-to-any-file: ["**/*.md", "RaceControlDocs/**"]

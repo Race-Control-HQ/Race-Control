@@ -1,7 +1,9 @@
 // The screen-by-screen feature catalogue.
 //
-// Source of truth is RaceControlAndroid/docs/FEATURES.md §3 (which documents the
-// iOS screens and every deliberate Android divergence) plus the root README §3.
+// Source of truth is the docs' Android feature inventory §3
+// (../RaceControlDocs/docs/architecture/android-feature-inventory.md, which
+// documents the iOS screens and every deliberate Android divergence) plus the
+// docs' Features pages.
 // Kept here as typed data rather than prose in a page component so the features
 // page, the platform pages and the home page all render from one list and can't
 // drift apart.

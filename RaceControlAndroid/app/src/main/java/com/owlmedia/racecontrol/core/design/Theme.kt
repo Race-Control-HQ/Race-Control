@@ -79,7 +79,7 @@ private val RcDarkScheme = darkColorScheme(
  * derive the palette from the user's wallpaper, which would collide with the
  * official F1 team and tyre colours the app uses to convey meaning: a green
  * "soft" tyre is simply wrong. This is a documented deviation from the Material
- * default (see docs/FEATURES.md §0).
+ * default (see the Android feature inventory §0 in RaceControlDocs).
  *
  * The system dark-mode setting is intentionally ignored for the same reason the iOS
  * app sets `.preferredColorScheme(.dark)`.

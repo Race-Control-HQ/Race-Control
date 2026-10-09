@@ -1,4 +1,4 @@
-// Illustration of the Races/Schedule screen (FEATURES.md §3.1): large season
+// Illustration of the Races/Schedule screen (Android feature inventory §3.1, in the docs): large season
 // title, the "up next" banner for the first non-completed event, then race rows
 // with round, flag, name, location, date, sprint badge and completed check.
 

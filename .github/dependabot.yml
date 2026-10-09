@@ -60,6 +60,16 @@ updates:
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
 
+  # Docs site: npm (VitePress).
+  - package-ecosystem: "npm"
+    directory: "/RaceControlDocs"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      docs-minor-patch:
+        update-types: ["minor", "patch"]
+
   # Android: Gradle plugins and libraries from gradle/libs.versions.toml.
   - package-ecosystem: "gradle"
     directory: "/RaceControlAndroid"

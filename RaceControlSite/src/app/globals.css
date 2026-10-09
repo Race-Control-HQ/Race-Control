@@ -3,7 +3,7 @@
 /*
  * Same fixed dark OLED palette as RaceControlWeb/src/app/globals.css, which
  * itself is ported from the mobile design system
- * (RaceControlAndroid/docs/FEATURES.md §5). Kept identical across the web
+ * (RaceControlDocs/docs/architecture/design-system.md). Kept identical across the web
  * app and this marketing site deliberately, NOT driven by
  * prefers-color-scheme — team-color semantics stay consistent everywhere.
  */

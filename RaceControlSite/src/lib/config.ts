@@ -7,7 +7,11 @@ export const siteConfig = {
   githubOrg: "https://github.com/Race-Control-HQ",
   githubRepo: "https://github.com/Race-Control-HQ/Race-Control",
 
-  // Public production backend (see ../backend, root README section 1b).
+  // The documentation site (../RaceControlDocs). All long-form docs live there;
+  // this site only links out to it (see the /docs redirects in next.config.ts).
+  docsUrl: (process.env.NEXT_PUBLIC_DOCS_URL ?? "https://docs.getracecontrol.com").replace(/\/+$/, ""),
+
+  // Public production backend (see ../backend and the self-hosting docs).
   backendApiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL ?? "https://racecontrol.owl-media.co.uk",
   backendDocsUrl:
     (process.env.NEXT_PUBLIC_BACKEND_API_URL ?? "https://racecontrol.owl-media.co.uk") + "/docs",

@@ -9,6 +9,7 @@
 - [ ] Android app
 - [ ] Web app
 - [ ] Project site
+- [ ] Docs
 - [ ] CI / repo tooling
 
 ## How it was tested
@@ -18,6 +19,6 @@
 ## Checklist
 
 - [ ] Tests added or updated for changed behaviour
-- [ ] README or docs updated if setup, endpoints or configuration changed
+- [ ] Docs in `RaceControlDocs/` updated if setup, endpoints or configuration changed
 - [ ] `backend/requirements.txt` recompiled with pip-compile if `backend/requirements.in` changed
 - [ ] No secrets, keys or real `.env` values committed

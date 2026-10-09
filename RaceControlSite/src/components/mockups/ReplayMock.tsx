@@ -1,6 +1,6 @@
 import { TEAM_COLORS, TYRE_COLORS } from "./tokens";
 
-// Illustration of the Race Replay screen (FEATURES.md §3.3): lap counter,
+// Illustration of the Race Replay screen (Android feature inventory §3.3, in the docs): lap counter,
 // running order with movement triangles, tyre badges and lap times, then the
 // transport row and the speed control.
 

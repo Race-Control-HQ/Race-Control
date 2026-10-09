@@ -1,4 +1,4 @@
-// Illustration of the Circuit detail track map (FEATURES.md §3.7): the outline
+// Illustration of the Circuit detail track map (Android feature inventory §3.7, in the docs): the outline
 // with numbered corner markers, the trace coloured by speed, and DRS zones
 // highlighted. The real component renders the outline from backend-supplied
 // points and rotates it by a backend-supplied `rotation`.
