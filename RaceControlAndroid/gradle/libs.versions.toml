@@ -4,7 +4,7 @@
 # Open the project in Android Studio and let it offer upgrades before the first
 # build; nothing here relies on APIs newer than the versions listed.
 [versions]
-agp = "8.5.2"
+agp = "9.4.1"
 kotlin = "2.0.20"
 ksp = "2.0.20-1.0.25"
 hilt = "2.52"
