@@ -33,7 +33,7 @@ private struct FingerprintRadar: View {
     var body: some View {
         Canvas { context, size in
             let center = CGPoint(x: size.width / 2, y: size.height / 2)
-            let radius = min(size.width, size.height) * 0.34
+            let radius = Double(min(size.width, size.height)) * 0.34
             for ring in 1...4 {
                 context.stroke(polygon(center, radius * Double(ring) / 4, count: axes.count),
                                with: .color(Theme.Palette.stroke), lineWidth: 1)
