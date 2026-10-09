@@ -5,7 +5,7 @@ A thin FastAPI wrapper over the FastF1 library that serves historical Formula 1
 data (2018-present) as JSON for the RaceControl iOS app.
 
 Run locally:
-    pip install -r requirements.txt
+    pip install -r requirements.in
     uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 Interactive docs once running:  http://localhost:8000/docs

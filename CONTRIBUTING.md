@@ -38,15 +38,16 @@ before you push.
 ```bash
 cd backend
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements-lock.txt
+pip install -r requirements.txt
 python -m pytest -v
 ```
 
 `./run.sh` starts the API on `http://localhost:8000` (docs at `/docs`).
 
-If you change `requirements.txt`, regenerate `requirements-lock.txt` with the command in
-that file's header and commit both together. CI fails if the lock file is missing a direct
-dependency.
+Dependencies are managed with [pip-tools](https://pip-tools.readthedocs.io):
+`requirements.in` is the hand-edited spec and `requirements.txt` is the compiled lock. If
+you change `requirements.in`, recompile with the command in its header and commit both
+files together. CI fails if the lock is missing a direct dependency.
 
 ### iOS
 

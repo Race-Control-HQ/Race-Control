@@ -36,7 +36,7 @@ each path-filtered so a change to one piece doesn't run the others' checks:
 
 | Workflow | Runs on changes to | What it does |
 |---|---|---|
-| `backend-ci.yml` | `backend/**` | Installs `requirements-lock.txt`, checks the lock file covers every direct dependency in `requirements.txt`, runs the whole `pytest` suite, then imports `main.py` with no env vars to confirm the open-by-default local-dev path still boots. |
+| `backend-ci.yml` | `backend/**` | Installs the pip-compile lock `requirements.txt`, checks it covers every direct dependency in `requirements.in`, runs the whole `pytest` suite, then imports `main.py` with no env vars to confirm the open-by-default local-dev path still boots. |
 | `android-ci.yml` | `RaceControlAndroid/**` | `./gradlew testDebugUnitTest` then `./gradlew assembleDebug`; uploads the test reports as a build artifact. |
 | `ios-ci.yml` | `RaceControlApp/**` | Unsigned `xcodebuild build` against `generic/platform=iOS Simulator`, then `xcodebuild test` on an iPhone simulator, on a macOS runner. |
 | `web-ci.yml` | `RaceControlWeb/**` | `npm ci`, `npm run lint`, `npm run build` for the web app. |
@@ -69,7 +69,7 @@ Manual start (instead of `run.sh`):
 ```bash
 cd backend
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.in
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
