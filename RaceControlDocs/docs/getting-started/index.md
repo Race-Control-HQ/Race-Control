@@ -12,7 +12,7 @@ cd Race-Control
 1. **[Run the backend](/getting-started/backend).** Every client needs it. It runs natively with no auth and no configuration.
 2. **Run a client.** Pick the one you care about:
    - [iOS app](/getting-started/ios) (Xcode 16+, macOS)
-   - [Android app](/getting-started/android) (Android Studio Ladybug or newer, JDK 17)
+   - [Android app](/getting-started/android) (Android Studio with AGP 9.4 support, JDK 17)
    - [Web app](/getting-started/web) (Node 20+)
 3. **Optionally, [run the project site or these docs](/getting-started/site-and-docs).** Neither needs the backend.
 
@@ -22,7 +22,7 @@ cd Race-Control
 |---|---|
 | Backend | Python 3.10+ |
 | iOS app | Xcode 16+, macOS |
-| Android app | Android Studio Ladybug or newer, JDK 17 |
+| Android app | Android Studio with AGP 9.4 support, JDK 17, Android SDK Platform 37 |
 | Web app | Node 20+ |
 | Project site | Node 20+ |
 | Docs | Node 20+ |

@@ -51,7 +51,7 @@ Then run whichever client you want:
 | Client | Requirements | Run it |
 |---|---|---|
 | iOS | Xcode 16+ | Open `RaceControlApp/RaceControl.xcodeproj`, pick a simulator, press ⌘R |
-| Android | Android Studio Ladybug+, JDK 17 | `cd RaceControlAndroid && ./gradlew assembleDebug`, or open the folder in Android Studio |
+| Android | Android Studio with AGP 9.4 support, JDK 17 | `cd RaceControlAndroid && ./gradlew assembleDebug`, or open the folder in Android Studio |
 | Web | Node 20+ | `cd RaceControlWeb && cp .env.example .env.local && npm install && npm run dev` |
 
 Full instructions for each piece, including physical devices and pointing the apps at your

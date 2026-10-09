@@ -1,6 +1,6 @@
 # Run the Android App
 
-Requirements: **Android Studio Ladybug or newer**, JDK 17.
+Requirements: an **Android Studio release that supports AGP 9.4**, JDK 17, and Android SDK Platform 37 (`compileSdk`). The Gradle wrapper pins Gradle 9.8.0.
 
 ## Build it
 
