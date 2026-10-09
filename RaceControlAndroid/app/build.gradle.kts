@@ -1,9 +1,9 @@
 import java.io.FileInputStream
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -33,7 +33,7 @@ val playIntegrityCloudProjectNumber: Long =
 
 android {
     namespace = "com.owlmedia.racecontrol"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.owlmedia.racecontrol"
@@ -73,11 +73,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn")
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
@@ -89,6 +84,15 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
+    }
+}
+
+// AGP 9 has Kotlin support built in (no org.jetbrains.kotlin.android plugin),
+// so compiler options live here rather than in android.kotlinOptions.
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+        freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
     }
 }
 
