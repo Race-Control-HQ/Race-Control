@@ -2,16 +2,54 @@ version: 2
 updates:
   # backend: Python (pip) dependencies. requirements.txt sets floors/ceilings;
   # requirements-lock.txt pins the exact resolved set actually installed (see
-  # its header). Review each PR by regenerating requirements-lock.txt against
-  # the updated requirements.txt and committing both together.
+  # its header). Updates are grouped into one weekly PR because the lock file
+  # is a `pip freeze` snapshot: bumping a single pin on its own can leave the
+  # set unresolvable. If the grouped PR still fails to install, regenerate
+  # requirements-lock.txt with the command in its header and push to the PR.
   - package-ecosystem: "pip"
     directory: "/backend"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    groups:
+      backend:
+        patterns: ["*"]
+
+  # Web app and project site: npm. Minor and patch updates are grouped; majors
+  # (Next.js, React, ESLint) arrive as individual PRs so they can be reviewed.
+  - package-ecosystem: "npm"
+    directory: "/RaceControlWeb"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      web-minor-patch:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "npm"
+    directory: "/RaceControlSite"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      site-minor-patch:
+        update-types: ["minor", "patch"]
+
+  # Android: Gradle plugins and libraries from gradle/libs.versions.toml.
+  - package-ecosystem: "gradle"
+    directory: "/RaceControlAndroid"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      android-minor-patch:
+        update-types: ["minor", "patch"]
 
   # GitHub Actions used by the CI workflows themselves.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]

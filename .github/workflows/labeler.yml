@@ -1,0 +1,19 @@
+name: Labeler
+
+# pull_request_target so pull requests from forks can be labelled. This is safe
+# here because the job never checks out or runs the pull request's code; it only
+# reads the list of changed files and .github/labeler.yml from the base branch.
+on:
+  pull_request_target:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    name: Apply component labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/labeler@v7

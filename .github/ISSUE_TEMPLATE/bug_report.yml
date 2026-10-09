@@ -1,0 +1,47 @@
+name: Bug report
+description: Something is broken or behaves incorrectly
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which piece of RaceControl is affected?
+      multiple: true
+      options:
+        - iOS app
+        - Android app
+        - Web app
+        - Backend API
+        - Project site
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the season, round and session if the bug is tied to specific data.
+      placeholder: |
+        1. Open the 2023 Monaco Grand Prix
+        2. Start the race replay
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and environment
+      description: App version or commit, plus device and OS version or browser.
+      placeholder: "e.g. commit b6a7c0a, iPhone 16, iOS 18.2"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Remove any tokens or keys before pasting.
