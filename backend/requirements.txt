@@ -53,13 +53,13 @@ cycler==0.12.1
     # via matplotlib
 ecdsa==0.19.2
     # via python-jose
-fastapi==0.142.2
+fastapi==0.143.0
     # via -r requirements.in
 fastf1==3.8.3
     # via -r requirements.in
 fonttools==4.64.0
     # via matplotlib
-google-auth==2.60.0
+google-auth==2.61.0
     # via -r requirements.in
 h11==0.16.0
     # via
