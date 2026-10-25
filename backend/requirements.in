@@ -33,3 +33,9 @@ requests>=2.31
 # dependencies so CI installs one reproducible set (see backend-ci.yml).
 pytest
 httpx
+
+# Security floors for transitive dependencies (OSV audit, 2026-10-25).
+certifi>=2026.10.19
+Pillow>=13.0.0
+urllib3>=2.8.0
+# msgpack remains constrained to 1.1.2 by signalrcore 1.0.2; see PR security notes.
