@@ -363,6 +363,9 @@ def get_race_trace(year: int, rnd: int, mode: str = "median") -> dict[str, Any]:
 # --------------------------------------------------------------------------- #
 def _usable_performance_lap(lap: Any) -> bool:
     """Whether a lap represents tyre pace rather than traffic control/pit loss."""
+    pit_out = lap.get("IsPitOutLap")
+    if pit_out is not None and not pd.isna(pit_out) and bool(pit_out):
+        return False
     ms = f1._td_ms(lap.get("LapTime"))
     if ms is None or ms <= 0:
         return False
@@ -664,6 +667,8 @@ def _valid_qualifying_laps(laps: Any) -> Any:
         mask &= laps[column].notna()
     if "Deleted" in laps:
         mask &= ~laps["Deleted"].fillna(False).astype(bool)
+    if "IsPitOutLap" in laps:
+        mask &= ~laps["IsPitOutLap"].fillna(False).astype(bool)
     return laps[mask]
 
 

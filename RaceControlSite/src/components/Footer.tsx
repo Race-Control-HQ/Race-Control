@@ -31,6 +31,9 @@ export function Footer() {
           Race data powered by{" "}
           <a href="https://github.com/theOehrly/Fast-F1" target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
             FastF1
+          </a>,{" "}
+          <a href="https://openf1.org" target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
+            OpenF1
           </a>{" "}
           and the{" "}
           <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>

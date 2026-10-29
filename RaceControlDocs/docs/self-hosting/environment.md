@@ -51,6 +51,7 @@ Any one of the three mechanisms authorises an `/api` request, and they are indep
 | `WEB_CONCURRENCY` | `1` | Uvicorn workers. **Must stay `1`**: `main.py` refuses to start above it. |
 | `RATE_LIMIT_PER_MINUTE` | `120` | Per-IP limit in requests per minute. `0` disables it. |
 | `ALLOWED_ORIGINS` | empty | Comma-separated browser origins allowed through CORS. Empty denies all. |
+| `OPENF1_ENABLED` | `true` | Fill missing feeds for completed sessions from 2023 onwards using the public OpenF1 API. No account or subscription is used. Set `false` to disable. |
 
 ### Caching
 

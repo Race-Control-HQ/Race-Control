@@ -244,6 +244,13 @@ def cached(key: str, producer: Callable[[], Any]) -> Any:
         _CACHE_ORDER.append(key)
         return hit[1]
     value = producer()
+    # Missing upstream data is retryable. Do not hide recovery behind the
+    # historical-data TTL (six hours by default).
+    if isinstance(value, dict) and value.get("available") is False:
+        _CACHE.pop(key, None)
+        if key in _CACHE_ORDER:
+            _CACHE_ORDER.remove(key)
+        return value
     # Recomputing an expired entry also makes it most recently used.
     if key in _CACHE_ORDER:
         _CACHE_ORDER.remove(key)

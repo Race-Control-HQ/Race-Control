@@ -188,6 +188,50 @@ def test_cached_calls_the_producer_once_within_the_ttl():
     assert len(calls) == 1
 
 
+def test_unavailable_response_retries_until_data_recovers():
+    _fresh_client()
+    responses = iter([{"available": False}, {"available": True, "trace": [1]}])
+    assert main.cached("telemetry", lambda: next(responses)) == {"available": False}
+    assert "telemetry" not in main._CACHE
+    recovered = main.cached("telemetry", lambda: next(responses))
+    assert recovered["available"] is True
+    assert main.cached("telemetry", lambda: next(responses)) == recovered
+
+
+def test_unavailable_refresh_removes_expired_cached_response():
+    _fresh_client()
+    main._CACHE["penalties"] = (0, {"penalties": []})
+    main._CACHE_ORDER.append("penalties")
+    main.cached("penalties", lambda: {"available": False, "penalties": []})
+    assert "penalties" not in main._CACHE
+    assert "penalties" not in main._CACHE_ORDER
+
+
+def test_telemetry_missing_laps_returns_200_and_retries(monkeypatch):
+    from fastf1.exceptions import DataNotLoadedError
+
+    class Session:
+        results = None
+
+        @property
+        def laps(self):
+            raise DataNotLoadedError("Timing unavailable")
+
+    calls = []
+
+    def load(*args, **kwargs):
+        calls.append(1)
+        return Session()
+
+    monkeypatch.setattr(main.svc, "_load_session", load)
+    client = _fresh_client()
+    for _ in range(2):
+        response = client.get("/api/telemetry/2026/18/ANT?lap=fastest")
+        assert response.status_code == 200
+        assert response.json()["available"] is False
+    assert len(calls) == 2
+
+
 def test_cached_recomputes_after_the_ttl_expires():
     _fresh_client()
     calls = []
