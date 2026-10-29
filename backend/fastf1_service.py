@@ -701,7 +701,7 @@ def get_drivers(year: int) -> list[dict[str, Any]]:
 #  WDC title-decider calculator
 # --------------------------------------------------------------------------- #
 # Points on offer for winning everything left on the calendar: race win +
-# fastest-lap bonus, plus a sprint win on sprint weekends. Mirrors FastF1's
+# fastest-lap bonus (2019–2024 only), plus a sprint win on sprint weekends. Mirrors FastF1's
 # own "who can still win the WDC" example (see
 # https://docs.fastf1.dev/gen_modules/examples_gallery/standings/plot_who_can_still_win_wdc.html),
 # deliberately simplified the same way that example is: it doesn't resolve
@@ -711,8 +711,8 @@ def get_drivers(year: int) -> list[dict[str, Any]]:
 # 2022+'s top-8 8..1). Precise historical sprint scoring isn't the point of a
 # forward-looking "can they still win" calculator, so the FastF1 convention
 # is used as-is rather than re-deriving it per season.
-_SPRINT_POINTS_TOTAL = 8 + 25 + 1  # sprint win + race win + fastest lap
-_CONVENTIONAL_POINTS_TOTAL = 25 + 1  # race win + fastest lap
+_SPRINT_WIN_POINTS = 8
+_RACE_WIN_POINTS = 25
 
 # Surfaced in the API response (and from there, in the client UI) so the two
 # approximations above are visible to whoever's reading the calculator, not
@@ -746,8 +746,8 @@ def _max_points_remaining(year: int, after_round: Optional[int] = None) -> tuple
     else:
         remaining = [e for e in events if e.get("round", 0) > after_round]
     sprint_remaining = sum(1 for e in remaining if str(e.get("format") or "").startswith("sprint"))
-    conventional_remaining = len(remaining) - sprint_remaining
-    max_points = sprint_remaining * _SPRINT_POINTS_TOTAL + conventional_remaining * _CONVENTIONAL_POINTS_TOTAL
+    fastest_lap_bonus = 1 if 2019 <= year <= 2024 else 0
+    max_points = len(remaining) * (_RACE_WIN_POINTS + fastest_lap_bonus) + sprint_remaining * _SPRINT_WIN_POINTS
     return len(remaining), max_points, sprint_remaining
 
 
