@@ -4,6 +4,27 @@ A FastAPI service in `backend/`. A thin serialisation layer (`fastf1_service.py`
 
 For what it serves, see the [API Reference](/api/index). For deployment, see [Self-hosting the backend](/self-hosting/backend).
 
+## Historical data fallback
+
+The shared session loader first tries FastF1 and preserves any usable native feeds
+and Jolpica identifiers. When a requested feed is missing, `openf1_service.py`
+matches the scheduled UTC date and session type to a completed OpenF1 session.
+This public fallback covers sessions from 2023 onwards without credentials or a
+subscription. `OPENF1_ENABLED=false` disables it.
+
+The adapter normalizes laps, sectors, stints, positions, race-control messages,
+weather and missing classifications into the structures consumed by the existing
+serializers and analytics. Car telemetry and location are fetched on demand per
+driver and time window. Telemetry distance is calculated by integrating speed.
+Missing DRS data keeps a zero-valued compatibility array with `drsAvailable: false`.
+Exact pit entry/exit timestamps and circuit corner metadata are not fabricated.
+
+OpenF1 requests share a bounded in-memory cache with a six-hour TTL and request
+spacing below three requests per second. Failures have a short backoff; partially
+restored sessions refresh after 30 seconds. API payloads marked `available: false`
+bypass the endpoint response cache, allowing missing data to recover. These caches
+clear on restart and do not replace the persistent FastF1 cache.
+
 ## Module boundaries
 
 `fastf1_service.py` (~2,300 lines) and `analytics_service.py` (~1,150 lines) each hold

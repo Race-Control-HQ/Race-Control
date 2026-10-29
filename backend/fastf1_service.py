@@ -25,6 +25,9 @@ import fastf1
 import numpy as np
 import pandas as pd
 from fastf1.ergast import Ergast
+from fastf1.exceptions import DataNotLoadedError
+
+import openf1_service
 
 log = logging.getLogger("racecontrol")
 
@@ -239,18 +242,37 @@ _SESSION_ORDER: list = []
 _SESSION_CACHE_MAX = int(os.environ.get("SESSION_CACHE_MAX", 48))
 
 
-def _session_has_data(session, laps_requested: bool) -> bool:
+def _session_has_data(session, laps_requested: bool, telemetry_requested: bool = False,
+                      messages_requested: bool = False, weather_requested: bool = False) -> bool:
+    # Results can load independently of timing. A driver list must not make
+    # a failed lap/telemetry/message load permanent in the session cache.
+    required = []
+    if laps_requested or telemetry_requested:
+        required.append(("laps", False))
+    # OpenF1 session metadata/laps are cached independently of its lazy traces.
+    # Failed trace requests retain only a short upstream backoff, not a six-hour
+    # unavailable API response.
+    if telemetry_requested and not isinstance(session, openf1_service.OpenF1Session):
+        required.extend((("car_data", False), ("pos_data", False)))
+    if messages_requested:
+        # A successfully loaded log can legitimately contain no messages.
+        required.append(("race_control_messages", True))
+    if weather_requested:
+        required.append(("weather_data", False))
+    for name, allow_empty in required:
+        try:
+            data = getattr(session, name)
+            if data is None or (not allow_empty and not len(data)):
+                return False
+        except (DataNotLoadedError, AttributeError):
+            return False
+    if required:
+        return True
     try:
         if session.results is not None and len(session.results):
             return True
     except Exception:  # noqa: BLE001
         pass
-    if laps_requested:
-        try:
-            if session.laps is not None and len(session.laps):
-                return True
-        except Exception:  # noqa: BLE001
-            pass
     return False
 
 
@@ -260,26 +282,54 @@ def _load_session(year: int, rnd: int, identifier: str, with_laps: bool,
                   force: bool = False):
     key = (year, rnd, identifier, with_laps, with_telemetry, with_messages, with_weather)
     if not force and key in _SESSION_CACHE:
-        return _SESSION_CACHE[key]
+        hit = _SESSION_CACHE[key]
+        if (not isinstance(hit, openf1_service.OpenF1Session)
+                or time.monotonic() < hit.expires_at):
+            return hit
+    # A forced refresh must also evict the previous entry if the new load fails.
+    _SESSION_CACHE.pop(key, None)
+    if key in _SESSION_ORDER:
+        _SESSION_ORDER.remove(key)
 
     session = fastf1.get_session(year, rnd, identifier)
     # Position/telemetry traces (used for the circuit map) are only available
     # when telemetry is loaded; loading it also implies loading laps.
     load_laps = with_laps or with_telemetry
-    session.load(
-        laps=load_laps,
-        telemetry=with_telemetry,
-        weather=with_weather,
-        messages=with_messages,
-    )
+    load_error = None
+    try:
+        session.load(
+            laps=load_laps,
+            telemetry=with_telemetry,
+            weather=with_weather,
+            messages=with_messages,
+        )
+    except Exception as exc:  # noqa: BLE001
+        # FastF1 usually swallows feed errors, but can also raise late in load.
+        # Give the public historical fallback a chance in either case.
+        load_error = exc
+
+    if not _session_has_data(session, load_laps, with_telemetry, with_messages, with_weather):
+        session = openf1_service.supplement(
+            session, year, identifier, laps=load_laps, telemetry=with_telemetry,
+            messages=with_messages, weather=with_weather,
+        )
+    if load_error is not None and not isinstance(session, openf1_service.OpenF1Session):
+        raise load_error
 
     # Only cache a load that actually produced usable data.
-    if _session_has_data(session, load_laps):
+    if _session_has_data(session, load_laps, with_telemetry, with_messages, with_weather):
         _SESSION_CACHE[key] = session
         _SESSION_ORDER.append(key)
         if len(_SESSION_ORDER) > _SESSION_CACHE_MAX:
             old = _SESSION_ORDER.pop(0)
             _SESSION_CACHE.pop(old, None)
+    else:
+        log.warning(
+            "Incomplete session load %s r%s %s (laps=%s telemetry=%s messages=%s "
+            "weather=%s, path=%s); not caching",
+            year, rnd, identifier, load_laps, with_telemetry, with_messages,
+            with_weather, getattr(session, "api_path", None),
+        )
     return session
 
 
@@ -1017,6 +1067,7 @@ def get_circuit_map(year: int, rnd: int) -> dict[str, Any]:
         # source telemetry was too coarse to draw smooth corners, which is a
         # data-availability issue rather than a rendering one.
         "outlineSamples": 0,
+        "available": False,
     }
     try:
         laps = session.laps
@@ -1170,6 +1221,7 @@ def get_circuit_map(year: int, rnd: int) -> dict[str, Any]:
             )
     except Exception as exc:  # noqa: BLE001
         log.warning("circuit info unavailable %s r%s: %s", year, rnd, exc)
+    payload["available"] = bool(payload["points"])
     return payload
 
 
@@ -1185,7 +1237,7 @@ def get_race_replay(year: int, rnd: int) -> dict[str, Any]:
     empty = {
         "year": year, "round": rnd,
         "eventName": _clean(session.event.get("EventName")),
-        "totalLaps": 0, "drivers": [], "frames": [],
+        "totalLaps": 0, "drivers": [], "frames": [], "available": False,
     }
     try:
         laps = session.laps
@@ -1194,6 +1246,7 @@ def get_race_replay(year: int, rnd: int) -> dict[str, Any]:
             return empty  # session not available / no timing data yet
     except Exception as exc:  # noqa: BLE001
         log.warning("replay data unavailable %s r%s: %s", year, rnd, exc)
+        empty["available"] = False
         return empty
 
     # Driver metadata for colouring / labels.
@@ -1269,6 +1322,7 @@ def get_race_replay(year: int, rnd: int) -> dict[str, Any]:
             {"code": k, **v} for k, v in meta.items()
         ],
         "frames": frames,
+        "available": bool(frames),
     }
 
 
@@ -1293,6 +1347,7 @@ def get_replay_positions(year: int, rnd: int, points_per_lap: int = 6) -> dict[s
         "totalLaps": 0,
         "drivers": [{"code": k, **v} for k, v in meta.items()],
         "laps": [],
+        "available": False,
     }
     try:
         laps = session.laps
@@ -1300,6 +1355,7 @@ def get_replay_positions(year: int, rnd: int, points_per_lap: int = 6) -> dict[s
             return payload
     except Exception as exc:  # noqa: BLE001
         log.warning("replay positions unavailable %s r%s: %s", year, rnd, exc)
+        payload["available"] = False
         return payload
 
     total_laps = int(laps["LapNumber"].max()) if len(laps) else 0
@@ -1353,6 +1409,7 @@ def get_replay_positions(year: int, rnd: int, points_per_lap: int = 6) -> dict[s
                 by_lap.setdefault(lap_no_int, {})[abbr] = pts
 
     payload["laps"] = [{"lap": n, "positions": by_lap[n]} for n in sorted(by_lap.keys())]
+    payload["available"] = bool(by_lap)
     return payload
 
 
@@ -1388,13 +1445,14 @@ def get_lap_times(year: int, rnd: int) -> dict[str, Any]:
     session = _load_session(year, rnd, "R", with_laps=True)
     empty = {"year": year, "round": rnd,
              "eventName": _clean(session.event.get("EventName")),
-             "totalLaps": 0, "drivers": []}
+             "totalLaps": 0, "drivers": [], "available": False}
     try:
         laps = session.laps
         if laps is None or not len(laps):
             return empty
     except Exception as exc:  # noqa: BLE001
         log.warning("laptimes unavailable %s r%s: %s", year, rnd, exc)
+        empty["available"] = False
         return empty
 
     meta = _driver_meta(session)
@@ -1434,13 +1492,18 @@ def get_strategy(year: int, rnd: int) -> dict[str, Any]:
     session = _load_session(year, rnd, "R", with_laps=True)
     empty = {"year": year, "round": rnd,
              "eventName": _clean(session.event.get("EventName")),
-             "totalLaps": 0, "drivers": []}
+             "totalLaps": 0, "drivers": [], "available": False}
     try:
         laps = session.laps
         if laps is None or not len(laps):
             return empty
     except Exception as exc:  # noqa: BLE001
         log.warning("strategy unavailable %s r%s: %s", year, rnd, exc)
+        empty["available"] = False
+        return empty
+
+    if "Stint" not in laps or laps["Stint"].isna().all():
+        empty["available"] = False
         return empty
 
     meta = _driver_meta(session)
@@ -1569,6 +1632,7 @@ def get_flags(year: int, rnd: int, identifier: str = "R") -> dict[str, Any]:
             return empty
     except Exception as exc:  # noqa: BLE001
         log.warning("flags unavailable %s r%s %s: %s", year, rnd, identifier, exc)
+        empty["available"] = False
         return empty
 
     total_laps = _session_total_laps(session)
@@ -1597,6 +1661,7 @@ def get_race_control(year: int, rnd: int, identifier: str = "R") -> dict[str, An
         rows = _race_control_rows(session)
     except Exception as exc:  # noqa: BLE001
         log.warning("race control unavailable %s r%s %s: %s", year, rnd, identifier, exc)
+        empty["available"] = False
         return empty
 
     return {"year": year, "round": rnd, "session": identifier,
@@ -1688,6 +1753,7 @@ def get_penalties(year: int, rnd: int, identifier: str = "R") -> dict[str, Any]:
             return empty
     except Exception as exc:  # noqa: BLE001
         log.warning("penalties unavailable %s r%s %s: %s", year, rnd, identifier, exc)
+        empty["available"] = False
         return empty
 
     meta = _driver_meta(session)
@@ -1868,7 +1934,11 @@ def _genuine_position_samples(
 
 
 def _lap_telemetry(session, abbr: str, which: str = "fastest") -> Optional[dict[str, Any]]:
-    d_laps = session.laps.pick_drivers(abbr)
+    try:
+        d_laps = session.laps.pick_drivers(abbr)
+    except DataNotLoadedError:
+        log.warning("Telemetry unavailable for %s: lap data did not load", abbr)
+        return None
     if d_laps is None or not len(d_laps):
         return None
     if which == "fastest":
@@ -1880,7 +1950,11 @@ def _lap_telemetry(session, abbr: str, which: str = "fastest") -> Optional[dict[
             lap = d_laps.pick_fastest()
     if lap is None:
         return None
-    tel = lap.get_telemetry()
+    try:
+        tel = lap.get_telemetry()
+    except DataNotLoadedError:
+        log.warning("Telemetry unavailable for %s: trace data did not load", abbr)
+        return None
     if tel is None or not len(tel):
         return None
 
@@ -1956,6 +2030,7 @@ def _lap_telemetry(session, abbr: str, which: str = "fastest") -> Optional[dict[
         "gear": [int(round(g)) for g in gear_arr],
         "rpm": [int(round(r)) for r in rpm_arr],
         "drs": [int(round(d)) for d in drs_arr],
+        "drsAvailable": bool(tel.attrs.get("drs_available", True)),
         "x": [float(v) for v in x_arr],
         "y": [float(v) for v in y_arr],
     }
