@@ -12,6 +12,8 @@ directly (same approach as test_teams_service.py).
     python test_wdc_calculator_service.py     (or: pytest test_wdc_calculator_service.py)
 """
 
+import pytest
+
 import fastf1_service as svc
 
 
@@ -83,6 +85,37 @@ def test_sprint_weekends_add_sprint_points_on_top(monkeypatch):
     out = svc.get_wdc_calculator(2024)
     assert out["sprintRoundsRemaining"] == 1
     assert out["maxRemainingPoints"] == 8 + 25 + 1
+
+
+@pytest.mark.parametrize("year, bonus", [(2018, 0), (2019, 1), (2024, 1), (2025, 0), (2026, 0)])
+@pytest.mark.parametrize("through_round", [None, 1])
+def test_fastest_lap_bonus_depends_on_season(monkeypatch, year, bonus, through_round):
+    events = _remaining_events(n_conventional=1, n_sprint=1, completed_conventional=1)
+    monkeypatch.setattr(svc, "get_schedule", lambda year: events)
+    monkeypatch.setattr(svc, "get_drivers", lambda year: _drivers())
+    monkeypatch.setattr(svc, "_points_progression", lambda year: _progression())
+
+    out = svc.get_wdc_calculator(year, through_round=through_round)
+
+    assert out["roundsRemaining"] == 2
+    assert out["sprintRoundsRemaining"] == 1
+    assert out["maxRemainingPoints"] == 2 * (25 + bonus) + 8
+    for driver in out["drivers"]:
+        assert driver["maxPoints"] == driver["points"] + out["maxRemainingPoints"]
+
+
+@pytest.mark.parametrize("year, can_win", [(2024, True), (2025, False), (2026, False)])
+def test_removed_bonus_changes_title_eligibility(monkeypatch, year, can_win):
+    drivers = _drivers()
+    drivers[1]["points"] = 349  # 51 behind: catchable with 52, eliminated with 50.
+    monkeypatch.setattr(svc, "get_drivers", lambda year: drivers)
+    monkeypatch.setattr(svc, "get_schedule", lambda year: _remaining_events(n_conventional=2))
+
+    out = svc.get_wdc_calculator(year)
+    by_id = {d["driverId"]: d for d in out["drivers"]}
+
+    assert by_id["norris"]["canWin"] is can_win
+    assert out["decided"] is (not can_win)
 
 
 def test_driver_with_no_points_on_record_does_not_crash(monkeypatch):
