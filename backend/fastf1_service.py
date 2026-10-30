@@ -16,6 +16,7 @@ import logging
 import math
 import os
 import re
+import threading
 import time
 from datetime import datetime, timedelta
 from functools import lru_cache
@@ -237,6 +238,10 @@ def _collect_multi(resp, max_pages: int = 25):
 # hold a divergent copy of this cache.
 _SESSION_CACHE: dict = {}
 _SESSION_ORDER: list = []
+# FastAPI runs sync routes in multiple threads, even with one uvicorn worker.
+# Serialize cold loads to avoid duplicate telemetry allocations and keep the
+# cache/order updates atomic. Hits only wait while a session is loading.
+_SESSION_LOAD_LOCK = threading.RLock()
 # Lower this on a memory-constrained container: a loaded race session with
 # telemetry can be tens of megabytes.
 _SESSION_CACHE_MAX = int(os.environ.get("SESSION_CACHE_MAX", 48))
@@ -280,6 +285,16 @@ def _load_session(year: int, rnd: int, identifier: str, with_laps: bool,
                   with_telemetry: bool = False, with_messages: bool = False,
                   with_weather: bool = False,
                   force: bool = False):
+    with _SESSION_LOAD_LOCK:
+        return _load_session_locked(
+            year, rnd, identifier, with_laps, with_telemetry, with_messages,
+            with_weather, force,
+        )
+
+
+def _load_session_locked(year: int, rnd: int, identifier: str, with_laps: bool,
+                         with_telemetry: bool, with_messages: bool,
+                         with_weather: bool, force: bool):
     key = (year, rnd, identifier, with_laps, with_telemetry, with_messages, with_weather)
     if not force and key in _SESSION_CACHE:
         hit = _SESSION_CACHE[key]

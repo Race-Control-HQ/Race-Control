@@ -1,6 +1,8 @@
 """Incomplete FastF1 loads must remain retryable even when results exist."""
 
 from types import SimpleNamespace
+from concurrent.futures import ThreadPoolExecutor
+from threading import Barrier, Event
 
 import pandas as pd
 import pytest
@@ -63,6 +65,61 @@ def test_each_requested_feed_is_required_for_caching(missing):
 def test_empty_loaded_message_log_is_valid():
     session = SimpleNamespace(laps=[1], race_control_messages=pd.DataFrame())
     assert svc._session_has_data(session, True, messages_requested=True)
+
+
+def test_concurrent_cold_requests_share_one_session(monkeypatch, session_cache):
+    start = Barrier(9)
+    loading = Event()
+    release = Event()
+    sessions = []
+
+    def load(**kwargs):
+        loading.set()
+        assert release.wait(timeout=5)
+
+    def get_session(*args):
+        session = SimpleNamespace(laps=[1], load=load)
+        sessions.append(session)
+        return session
+
+    def request():
+        start.wait(timeout=5)
+        return svc._load_session(2021, 22, "R", True)
+
+    monkeypatch.setattr(svc.fastf1, "get_session", get_session)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(request) for _ in range(8)]
+        start.wait(timeout=5)
+        try:
+            assert loading.wait(timeout=5)
+        finally:
+            release.set()
+        results = [future.result(timeout=5) for future in futures]
+
+    assert len(sessions) == 1
+    assert all(result is sessions[0] for result in results)
+    assert len(svc._SESSION_CACHE) == len(svc._SESSION_ORDER) == 1
+
+
+def test_eviction_releases_session_after_collecting_cycles(monkeypatch, session_cache):
+    import gc
+    import weakref
+
+    class Session:
+        laps = [1]
+
+        def load(self, **kwargs):
+            # FastF1 Laps/Telemetry hold references back to their session.
+            self.back_reference = self
+
+    monkeypatch.setattr(svc.fastf1, "get_session", lambda *args: Session())
+    monkeypatch.setattr(svc, "_SESSION_CACHE_MAX", 1)
+    first = svc._load_session(2021, 21, "R", True)
+    reference = weakref.ref(first)
+    del first
+    svc._load_session(2021, 22, "R", True)
+    gc.collect()
+    assert reference() is None
 
 
 def test_results_only_load_still_works():
