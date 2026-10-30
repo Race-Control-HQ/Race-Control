@@ -81,6 +81,9 @@ in-memory session/response caches; it does not resolve upstream access failures.
 
 ## Tests
 
+For memory growth, measured cache costs and deployment mitigation, see the
+[backend memory investigation](MEMORY_INVESTIGATION.md).
+
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
