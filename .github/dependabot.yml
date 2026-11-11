@@ -7,7 +7,8 @@ updates:
   - package-ecosystem: "pip"
     directory: "/backend"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     open-pull-requests-limit: 5
     # Only move pins in the compiled lock; leave the floors in requirements.in
     # as the minimum versions the code actually needs.
@@ -21,7 +22,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/RaceControlWeb"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     open-pull-requests-limit: 5
     groups:
       web-minor-patch:
@@ -42,7 +44,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/RaceControlSite"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     open-pull-requests-limit: 5
     groups:
       site-minor-patch:
@@ -64,7 +67,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/RaceControlDocs"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     open-pull-requests-limit: 5
     groups:
       docs-minor-patch:
@@ -74,7 +78,8 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/RaceControlAndroid"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     open-pull-requests-limit: 5
     groups:
       android-minor-patch:
@@ -84,7 +89,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "02:00"
     groups:
       actions:
         patterns: ["*"]
