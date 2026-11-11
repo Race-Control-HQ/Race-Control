@@ -116,8 +116,9 @@ platformdirs==4.11.3
     #   requests-cache
 pluggy==1.6.0
     # via pytest
-pyasn1==0.6.4
+pyasn1==0.6.5
     # via
+    #   -r requirements.in
     #   pyasn1-modules
     #   python-jose
     #   rsa
