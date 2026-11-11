@@ -86,8 +86,10 @@ matplotlib==3.11.1
     # via
     #   fastf1
     #   timple
-msgpack==1.1.2
-    # via signalrcore
+msgpack==1.2.4
+    # via
+    #   -r requirements.in
+    #   signalrcore
 numpy==2.5.3
     # via
     #   contourpy
@@ -174,7 +176,7 @@ rsa==4.9.1
     # via python-jose
 scipy==1.18.0
     # via fastf1
-signalrcore==1.0.2
+signalrcore==1.0.4
     # via fastf1
 six==1.17.0
     # via
