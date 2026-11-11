@@ -9,9 +9,9 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# curl is only needed for the container healthcheck.
+# Install curl for the healthcheck and pick up Debian security updates for zlib.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
+    && apt-get install -y --no-install-recommends curl zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies first so this layer caches across code changes.
@@ -22,7 +22,8 @@ RUN apt-get update \
 # version-unbounded, which is unreproducible for a security-sensitive auth
 # stack (PyJWT, cryptography, google-auth).
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --upgrade 'pip==26.3' \
+    && python -m pip install -r requirements.txt
 
 COPY . .
 
