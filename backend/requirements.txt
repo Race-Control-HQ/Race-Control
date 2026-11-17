@@ -24,7 +24,7 @@ attrs==26.1.0
     #   requests-cache
 cattrs==26.1.0
     # via requests-cache
-cbor2==6.2.1
+cbor2==6.3.0
     # via
     #   -r requirements.in
     #   pyattest
@@ -54,13 +54,13 @@ cycler==0.12.1
     # via matplotlib
 ecdsa==0.19.2
     # via python-jose
-fastapi==0.162.4
+fastapi==0.163.1
     # via -r requirements.in
 fastf1==3.9.2
     # via -r requirements.in
 fonttools==4.64.0
     # via matplotlib
-google-auth==2.62.1
+google-auth==2.62.2
     # via -r requirements.in
 h11==0.16.0
     # via
